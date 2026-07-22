@@ -57,9 +57,9 @@ export default function InvoicePreview() {
       if (!safeName) safeName = 'invoice';
       const filename = `${safeName}.pdf`;
       await exportToPDF('invoice-preview-content', filename);
-    } catch (err) {
+    } catch (err: any) {
       console.error('PDF export failed:', err);
-      setValidationError('PDF export failed. Please try again.');
+      setValidationError(`PDF export failed: ${err?.message || err}`);
       setTimeout(() => setValidationError(null), 4000);
     } finally {
       setIsExporting(false);

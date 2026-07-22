@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 
 export async function exportToPDF(
   elementId: string,
@@ -10,12 +10,30 @@ export async function exportToPDF(
     throw new Error(`Element with id "${elementId}" not found`);
   }
 
+  // Wait for fonts/images to be fully ready (just in case)
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
   // Capture the element at high resolution
   const canvas = await html2canvas(element, {
     scale: 2,
     useCORS: true,
     backgroundColor: '#ffffff',
     logging: false,
+    width: element.scrollWidth,
+    height: element.scrollHeight,
+    windowWidth: element.scrollWidth,
+    windowHeight: element.scrollHeight,
+    onclone: (documentClone) => {
+      const clonedElement = documentClone.getElementById(elementId);
+      if (clonedElement) {
+        // Isolate the element to avoid parent CSS (overflow, transforms, flex) from breaking the canvas
+        documentClone.body.innerHTML = '';
+        documentClone.body.appendChild(clonedElement);
+        clonedElement.style.transform = 'none';
+        clonedElement.style.margin = '0';
+        clonedElement.style.boxShadow = 'none'; // Don't render the shadow in the PDF
+      }
+    }
   });
 
   const imgData = canvas.toDataURL('image/jpeg', 1.0);
