@@ -101,7 +101,7 @@ export default function MinimalMono() {
               )}
               {business.phone && (
                 <p className="text-[10px] text-[#4b5563]">
-                  <span className="font-semibold">PAN No.:</span> {business.phone}
+                  <span className="font-semibold">Phone number:</span> {business.phone}
                 </p>
               )}
               {business.email && (
@@ -194,9 +194,9 @@ export default function MinimalMono() {
                   {i + 1}
                 </td>
                 <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}>
-                  <span className="font-medium">{item.description || <span className="text-[#d1d5db] italic">—</span>}</span>
+                  <span className="font-medium whitespace-pre-line">{item.description || <span className="text-[#d1d5db] italic">—</span>}</span>
                 </td>
-                <td className="border-r px-2 py-2 text-center text-[#6b7280]" style={{ borderColor: '#d1d5db' }}>—</td>
+                <td className="border-r px-2 py-2 text-center text-[#6b7280]" style={{ borderColor: '#d1d5db' }}>{item.hsnSac || '—'}</td>
                 <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>{item.quantity}</td>
                 <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>{item.unitPrice.toFixed(2)}</td>
                 <td className="border-r px-2 py-2 text-center text-[#6b7280]" style={{ borderColor: '#d1d5db' }}>Nos</td>

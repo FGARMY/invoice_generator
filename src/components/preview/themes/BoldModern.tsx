@@ -27,6 +27,7 @@ export default function BoldModern() {
   const gst = calcGSTSplit(subtotal, discount, tax);
   const total = subtotal - discountAmt + taxAmt + (shipping || 0);
   const fmt = (n: number) => formatCurrency(n, currency);
+  const hasHsnSac = lineItems.some(item => item.hsnSac);
 
   // Black and white minimalist colors
   const primaryColor = '#000000';
@@ -108,6 +109,7 @@ export default function BoldModern() {
             <thead>
               <tr className="border-b-[3px] border-[#000000]">
                 <th className="py-4 text-[9px] font-black uppercase tracking-widest w-[50%]">Description</th>
+                {hasHsnSac && <th className="py-4 text-[9px] font-black uppercase tracking-widest text-center">HSN/SAC</th>}
                 <th className="py-4 text-[9px] font-black uppercase tracking-widest text-center">Qty</th>
                 <th className="py-4 text-[9px] font-black uppercase tracking-widest text-right">Rate</th>
                 <th className="py-4 text-[9px] font-black uppercase tracking-widest text-right">Amount</th>
@@ -117,10 +119,13 @@ export default function BoldModern() {
               {lineItems.map((item, i) => (
                 <tr key={item.id} className="border-b border-[#E5E5E5]">
                   <td className="py-4">
-                    <span className="font-bold text-[12px]">
+                    <span className="font-bold text-[12px] whitespace-pre-line">
                       {item.description || <span className="text-[#A3A3A3] italic">No description</span>}
                     </span>
                   </td>
+                  {hasHsnSac && (
+                    <td className="py-4 text-center font-bold text-[#404040]">{item.hsnSac || '-'}</td>
+                  )}
                   <td className="py-4 text-center font-bold text-[#404040]">{item.quantity}</td>
                   <td className="py-4 text-right font-bold text-[#404040]">{fmt(item.unitPrice)}</td>
                   <td className="py-4 text-right font-black text-[12px]">

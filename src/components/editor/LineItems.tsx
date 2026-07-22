@@ -33,8 +33,9 @@ export default function LineItems() {
 
       {/* Header */}
       <div className="grid grid-cols-12 gap-2 text-xs font-medium text-slate-500 px-1">
-        <div className="col-span-5">Description</div>
-        <div className="col-span-2 text-center">Qty</div>
+        <div className="col-span-4">Description</div>
+        <div className="col-span-2">HSN/SAC</div>
+        <div className="col-span-1 text-center">Qty</div>
         <div className="col-span-2 text-center">Price ({sym})</div>
         <div className="col-span-2 text-right">Total</div>
         <div className="col-span-1"></div>
@@ -45,20 +46,31 @@ export default function LineItems() {
         {lineItems.map((item, index) => (
           <div
             key={item.id}
-            className="grid grid-cols-12 gap-2 items-center group"
+            className="grid grid-cols-12 gap-2 items-start group"
           >
-            <div className="col-span-5">
-              <input
-                type="text"
+            <div className="col-span-4">
+              <textarea
                 value={item.description}
                 onChange={(e) =>
                   updateLineItem(item.id, { description: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                rows={1}
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-y min-h-[38px]"
                 placeholder={index === 0 ? 'e.g. Web Design Service' : 'Item description'}
               />
             </div>
             <div className="col-span-2">
+              <input
+                type="text"
+                value={item.hsnSac || ''}
+                onChange={(e) =>
+                  updateLineItem(item.id, { hsnSac: e.target.value })
+                }
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                placeholder="HSN/SAC"
+              />
+            </div>
+            <div className="col-span-1">
               <input
                 type="number"
                 value={item.quantity || ''}

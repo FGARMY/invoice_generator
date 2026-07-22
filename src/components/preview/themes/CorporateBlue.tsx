@@ -27,6 +27,7 @@ export default function CorporateBlue() {
   const gst = calcGSTSplit(subtotal, discount, tax);
   const total = subtotal - discountAmt + taxAmt + (shipping || 0);
   const fmt = (n: number) => formatCurrency(n, currency);
+  const hasHsnSac = lineItems.some(item => item.hsnSac);
 
   // Swiss Design colors
   const primaryNavy = accentColor || '#0F172A';
@@ -95,6 +96,7 @@ export default function CorporateBlue() {
             <thead>
               <tr className="border-y-2" style={{ borderColor: primaryNavy }}>
                 <th className="py-3 px-2 text-[9px] font-bold uppercase tracking-widest text-[#0F172A] w-[50%]">Item Description</th>
+                {hasHsnSac && <th className="py-3 px-2 text-[9px] font-bold uppercase tracking-widest text-center text-[#0F172A]">HSN/SAC</th>}
                 <th className="py-3 px-2 text-[9px] font-bold uppercase tracking-widest text-center text-[#0F172A]">Qty</th>
                 <th className="py-3 px-2 text-[9px] font-bold uppercase tracking-widest text-right text-[#0F172A]">Rate</th>
                 <th className="py-3 px-2 text-[9px] font-bold uppercase tracking-widest text-right text-[#0F172A]">Amount</th>
@@ -104,10 +106,13 @@ export default function CorporateBlue() {
               {lineItems.map((item, i) => (
                 <tr key={item.id} className="border-b" style={{ borderColor: neutralBorder }}>
                   <td className="py-4 px-2">
-                    <span className="font-bold text-[#0F172A]">
+                    <span className="font-bold text-[#0F172A] whitespace-pre-line">
                       {item.description || <span className="text-[#CBD5E1] italic">No description</span>}
                     </span>
                   </td>
+                  {hasHsnSac && (
+                    <td className="py-4 px-2 text-center text-[#475569] font-medium">{item.hsnSac || '-'}</td>
+                  )}
                   <td className="py-4 px-2 text-center text-[#475569] font-medium">{item.quantity}</td>
                   <td className="py-4 px-2 text-right text-[#475569] font-medium">{fmt(item.unitPrice)}</td>
                   <td className="py-4 px-2 text-right font-bold text-[#0F172A]">

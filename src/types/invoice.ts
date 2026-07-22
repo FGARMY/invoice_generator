@@ -21,6 +21,7 @@ export interface Client {
 export interface LineItem {
   id: string;
   description: string;
+  hsnSac?: string; // HSN/SAC code
   quantity: number;
   unitPrice: number;
   taxRate: number; // per-item tax rate (percentage), 0 if not used
