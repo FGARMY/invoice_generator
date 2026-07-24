@@ -71,6 +71,7 @@ export const defaultPaymentDetails: PaymentDetails = {
   bankName: '',
   accountNumber: '',
   ifscSwift: '',
+  bankAddress: '',
   upiId: '',
   paymentLink: '',
 };
@@ -88,7 +89,7 @@ export const defaultInvoice: Invoice = {
   status: 'Draft',
   business: { ...defaultBusiness },
   client: { ...defaultClient },
-  lineItems: [createEmptyLineItem()],
+  lineItems: Array(10).fill(null).map(() => createEmptyLineItem()),
   subtotal: 0,
   discount: { ...defaultDiscount },
   tax: { ...defaultTax },

@@ -32,6 +32,38 @@ export async function exportToPDF(
         clonedElement.style.transform = 'none';
         clonedElement.style.margin = '0';
         clonedElement.style.boxShadow = 'none'; // Don't render the shadow in the PDF
+        // Force exact dimensions on the root
+        clonedElement.style.width = `${element.scrollWidth}px`;
+        clonedElement.style.height = `${element.scrollHeight}px`;
+        
+        // html2canvas has severe bugs calculating dynamic flexbox sizes (flex-1, grow).
+        // To fix this, we measure the EXACT rendered pixel dimensions in the live DOM
+        // and hardcode them onto the cloned elements before html2canvas renders them.
+        const originalFlexElements = element.querySelectorAll('.flex-1, .grow');
+        const clonedFlexElements = clonedElement.querySelectorAll('.flex-1, .grow');
+        
+        originalFlexElements.forEach((orig, index) => {
+          const cloneNode = clonedFlexElements[index] as HTMLElement;
+          if (cloneNode) {
+            const rect = orig.getBoundingClientRect();
+            // Freeze height
+            cloneNode.style.height = `${rect.height}px`;
+            cloneNode.style.minHeight = `${rect.height}px`;
+            cloneNode.style.maxHeight = `${rect.height}px`;
+            // Freeze width
+            cloneNode.style.width = `${rect.width}px`;
+            cloneNode.style.minWidth = `${rect.width}px`;
+            cloneNode.style.maxWidth = `${rect.width}px`;
+          }
+        });
+
+        // Also freeze the height of the empty stretching row in the table layout
+        const emptyRow = element.querySelector('#empty-stretch-row') as HTMLElement;
+        const clonedEmptyRow = clonedElement.querySelector('#empty-stretch-row') as HTMLElement;
+        if (emptyRow && clonedEmptyRow) {
+          const rect = emptyRow.getBoundingClientRect();
+          clonedEmptyRow.style.height = `${rect.height}px`;
+        }
       }
     }
   });

@@ -129,6 +129,21 @@ export default function NotesTerms() {
 
             <div>
               <label className="block text-xs font-medium text-slate-400 mb-1">
+                Branch Address
+              </label>
+              <input
+                type="text"
+                value={paymentDetails.bankAddress || ''}
+                onChange={(e) =>
+                  updatePaymentDetails({ bankAddress: e.target.value })
+                }
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                placeholder="123 Bank Street, City"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
                 Payment Link
               </label>
               <input

@@ -29,6 +29,8 @@ export default function InvoicePreview() {
   const padding = 32; // 16px padding on each side
   const scale = containerWidth > 0 ? Math.min(1, (containerWidth - padding) / A4_WIDTH_PX) : 1;
 
+  const [contentRef, { height: contentHeight }] = useElementSize();
+  
   const ThemeComponent = themeComponents[theme] || MinimalMono;
 
   const validate = useCallback((): boolean => {
@@ -127,14 +129,15 @@ export default function InvoicePreview() {
             transform: `scale(${scale})`,
             transformOrigin: 'top center',
             // Reserve height based on scale to prevent layout collapse
-            height: `${297 * scale}mm`,
-            marginBottom: `${(1 - scale) * -297}mm`
+            height: contentHeight > 0 ? contentHeight * scale : `${297 * scale}mm`,
+            marginBottom: contentHeight > 0 ? (1 - scale) * -contentHeight : `${(1 - scale) * -297}mm`
           }}
           className="print:transform-none print:h-auto print:mb-0"
         >
           <div
+            ref={contentRef}
             id="invoice-preview-content"
-            className="mx-auto print:shadow-none bg-white"
+            className="mx-auto print:shadow-none bg-white flex flex-col"
             style={{
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.3)',
               width: '210mm',

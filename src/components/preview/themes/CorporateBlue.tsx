@@ -35,10 +35,10 @@ export default function CorporateBlue() {
 
   return (
     <div
-      className="min-h-[842px] text-[11px] leading-relaxed relative bg-[#ffffff]"
+      className="min-h-full h-full flex flex-col text-[11px] leading-relaxed relative bg-[#ffffff]"
       style={{ color: '#0F172A', fontFamily: fontFamily ? `'${fontFamily}', sans-serif` : "'Inter', sans-serif" }}
     >
-      <div className="px-12 pt-12 pb-8">
+      <div className="px-12 pt-12 pb-8 flex-1 flex flex-col">
         {/* Header Grid */}
         <div className="grid grid-cols-2 gap-8 mb-12 border-b-2 pb-8" style={{ borderColor: primaryNavy }}>
           {/* Logo / Brand Name */}
@@ -138,6 +138,12 @@ export default function CorporateBlue() {
                       <span className="font-medium text-[#0F172A]">{paymentDetails.bankName}</span>
                     </div>
                   )}
+                  {paymentDetails.bankAddress && (
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-[#64748B] font-bold uppercase tracking-wider">Branch</span>
+                      <span className="font-medium text-[#0F172A]">{paymentDetails.bankAddress}</span>
+                    </div>
+                  )}
                   {paymentDetails.accountNumber && (
                     <div className="flex justify-between">
                       <span className="text-[10px] text-[#64748B] font-bold uppercase tracking-wider">Acct No</span>
@@ -230,7 +236,7 @@ export default function CorporateBlue() {
         </div>
 
         {/* Footer (Notes + Signature) */}
-        <div className="grid grid-cols-2 gap-8 mt-12">
+        <div className="grid grid-cols-2 gap-8 mt-auto pt-12">
           <div>
             {(notes || terms) && (
               <div className="space-y-4">

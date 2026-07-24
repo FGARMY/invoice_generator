@@ -44,6 +44,7 @@ export interface PaymentDetails {
   bankName: string;
   accountNumber: string;
   ifscSwift: string; // IFSC or SWIFT code
+  bankAddress?: string;
   upiId: string;
   paymentLink: string;
 }

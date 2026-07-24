@@ -35,10 +35,10 @@ export default function BoldModern() {
 
   return (
     <div
-      className="bg-[#ffffff] text-[#000000] min-h-[842px] text-[11px] leading-relaxed relative flex flex-col"
+      className="bg-[#ffffff] text-[#000000] min-h-full h-full text-[11px] leading-relaxed relative flex flex-col"
       style={{ fontFamily: fontFamily ? `'${fontFamily}', sans-serif` : "'Inter', sans-serif" }}
     >
-      <div className="flex-1 px-12 pt-12 pb-8">
+      <div className="flex-1 px-12 pt-12 pb-8 flex flex-col">
         {/* Editorial Header */}
         <div className="border-b-[4px] border-[#000000] pb-8 mb-12 flex justify-between items-end">
           <div className="w-[60%]">
@@ -149,6 +149,12 @@ export default function BoldModern() {
                     <div>
                       <span className="block text-[9px] font-bold uppercase tracking-widest text-[#737373]">Bank</span>
                       <span className="font-bold">{paymentDetails.bankName}</span>
+                    </div>
+                  )}
+                  {paymentDetails.bankAddress && (
+                    <div>
+                      <span className="block text-[9px] font-bold uppercase tracking-widest text-[#737373]">Branch</span>
+                      <span className="font-bold">{paymentDetails.bankAddress}</span>
                     </div>
                   )}
                   {paymentDetails.accountNumber && (

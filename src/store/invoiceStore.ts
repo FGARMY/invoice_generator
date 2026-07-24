@@ -196,16 +196,24 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   },
 
   resetInvoice: () => {
-    const prefix = get().invoicePrefix;
+    const state = get();
+    const prefix = state.invoicePrefix;
     const seq = parseInt(
-      get().invoiceNumber.replace(/\D/g, '').slice(-3) || '0',
+      state.invoiceNumber.replace(/\D/g, '').slice(-3) || '0',
       10
     );
     set({
       ...defaultInvoice,
       invoiceNumber: generateInvoiceNumber(prefix, seq + 1),
       invoicePrefix: prefix,
-      business: get().business, // keep business info
+      business: state.business,
+      paymentDetails: state.paymentDetails,
+      notes: state.notes,
+      terms: state.terms,
+      currency: state.currency,
+      theme: state.theme,
+      accentColor: state.accentColor,
+      fontFamily: state.fontFamily,
     });
   },
 

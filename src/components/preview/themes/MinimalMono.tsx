@@ -61,7 +61,7 @@ export default function MinimalMono() {
 
   return (
     <div
-      className="bg-[#ffffff] text-[#111827] min-h-[842px] text-[11px] leading-snug p-6"
+      className="bg-[#ffffff] text-[#111827] flex-1 w-full flex flex-col text-[11px] leading-snug p-6"
       style={{ fontFamily: fontFamily ? `'${fontFamily}', sans-serif` : "'Inter', sans-serif" }}
     >
       {/* Top: Tax Invoice Title + Original Copy */}
@@ -135,7 +135,7 @@ export default function MinimalMono() {
       </div>
 
       {/* Consignee / Shipping Row */}
-      <div className="border-x-2 border-b-2" style={{ borderColor }}>
+      <div style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
         <div className="flex">
           <div className="flex-1 p-2.5" style={{ borderRight: `1px solid ${borderColor}` }}>
             <p className="text-[9px] font-bold text-[#6b7280] uppercase tracking-widest mb-1">Consignee (Bill To)</p>
@@ -158,85 +158,80 @@ export default function MinimalMono() {
         </div>
       </div>
 
-      {/* Line Items Table */}
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-x-2 border-b-2" style={{ borderColor }}>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center w-8" style={{ borderColor }}>
-              S.No.
-            </th>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-left" style={{ borderColor }}>
-              Description of Goods / Services
-            </th>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center w-16" style={{ borderColor }}>
-              HSN/SAC
-            </th>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center w-14" style={{ borderColor }}>
-              Quantity
-            </th>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center w-14" style={{ borderColor }}>
-              Rate
-            </th>
-            <th className="border-r px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center w-10" style={{ borderColor }}>
-              Per
-            </th>
-            <th className="px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-right w-20" style={{ borderColor }}>
-              Amount ({sym})
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {lineItems.map((item, i) => {
-            const lineTotal = item.quantity * item.unitPrice;
-            return (
-              <tr key={item.id} className="border-x-2 border-b" style={{ borderColor: i === lineItems.length - 1 ? borderColor : '#e5e7eb' }}>
-                <td className="border-r px-2 py-2 text-center text-[#4b5563]" style={{ borderColor: '#d1d5db' }}>
-                  {i + 1}
-                </td>
-                <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}>
-                  <span className="font-medium whitespace-pre-line">{item.description || <span className="text-[#d1d5db] italic">—</span>}</span>
-                </td>
-                <td className="border-r px-2 py-2 text-center text-[#6b7280]" style={{ borderColor: '#d1d5db' }}>{item.hsnSac || '—'}</td>
-                <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>{item.quantity}</td>
-                <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>{item.unitPrice.toFixed(2)}</td>
-                <td className="border-r px-2 py-2 text-center text-[#6b7280]" style={{ borderColor: '#d1d5db' }}>Nos</td>
-                <td className="px-2 py-2 text-right font-medium">{lineTotal.toFixed(2)}</td>
+      {/* Line Items - HTML Table Based with ID for PDF dimension freezing */}
+      <div className="grow flex flex-col">
+        <table className="w-full border-collapse" style={{ height: '100%', borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
+          <thead>
+            <tr style={{ borderBottom: `2px solid ${borderColor}` }}>
+              <th className="w-[40px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>S.No.</th>
+              <th className="px-3 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-left align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>Description of Goods / Services</th>
+              <th className="w-[65px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>HSN/SAC</th>
+              <th className="w-[60px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>Qty</th>
+              <th className="w-[65px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>Rate</th>
+              <th className="w-[45px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-center align-middle" style={{ borderRight: `1px solid ${borderColor}` }}>Per</th>
+              <th className="w-[90px] px-2 py-2 text-[9px] font-bold text-[#4b5563] uppercase text-right align-middle">Amount ({sym})</th>
+            </tr>
+          </thead>
+          <tbody className="align-top">
+            {lineItems.map((item, i) => {
+              const lineTotal = item.quantity * item.unitPrice;
+              return (
+                <tr key={item.id} style={{ borderBottom: `1px solid ${borderColor}` }}>
+                  <td className="px-2 py-2 text-center text-[#4b5563]" style={{ borderRight: `1px solid ${borderColor}` }}>{i + 1}</td>
+                  <td className="px-3 py-2" style={{ borderRight: `1px solid ${borderColor}` }}>
+                    <span className="font-medium whitespace-pre-line">{item.description || <span className="text-[#d1d5db] italic">—</span>}</span>
+                  </td>
+                  <td className="px-2 py-2 text-center text-[#6b7280]" style={{ borderRight: `1px solid ${borderColor}` }}>{item.hsnSac || '—'}</td>
+                  <td className="px-2 py-2 text-center" style={{ borderRight: `1px solid ${borderColor}` }}>{item.quantity}</td>
+                  <td className="px-2 py-2 text-center" style={{ borderRight: `1px solid ${borderColor}` }}>{item.unitPrice.toFixed(2)}</td>
+                  <td className="px-2 py-2 text-center text-[#6b7280]" style={{ borderRight: `1px solid ${borderColor}` }}>Nos</td>
+                  <td className="px-2 py-2 text-right font-medium">{lineTotal.toFixed(2)}</td>
+                </tr>
+              );
+            })}
+            
+            {/* Shipping row */}
+            {shipping > 0 && (
+              <tr style={{ borderBottom: `1px solid ${borderColor}` }}>
+                <td className="px-2 py-2 text-center text-[#4b5563]" style={{ borderRight: `1px solid ${borderColor}` }}>{lineItems.length + 1}</td>
+                <td className="px-3 py-2 font-medium" style={{ borderRight: `1px solid ${borderColor}` }}>Freight Charges</td>
+                <td className="px-2 py-2" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-2 text-center" style={{ borderRight: `1px solid ${borderColor}` }}>1</td>
+                <td className="px-2 py-2 text-center" style={{ borderRight: `1px solid ${borderColor}` }}>{shipping.toFixed(2)}</td>
+                <td className="px-2 py-2" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-2 text-right font-medium">{shipping.toFixed(2)}</td>
               </tr>
-            );
-          })}
-
-          {/* Shipping row */}
-          {shipping > 0 && (
-            <tr className="border-x-2 border-b" style={{ borderColor: '#e5e7eb' }}>
-              <td className="border-r px-2 py-2 text-center text-[#4b5563]" style={{ borderColor: '#d1d5db' }}>
-                {lineItems.length + 1}
-              </td>
-              <td className="border-r px-2 py-2 font-medium" style={{ borderColor: '#d1d5db' }}>Freight Charges</td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>1</td>
-              <td className="border-r px-2 py-2 text-center" style={{ borderColor: '#d1d5db' }}>{shipping.toFixed(2)}</td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="px-2 py-2 text-right font-medium">{shipping.toFixed(2)}</td>
+            )}
+            
+            {/* Padding empty rows to guarantee 10 fixed boxes */}
+            {Array.from({ length: Math.max(0, 10 - (lineItems.length + (shipping > 0 ? 1 : 0))) }).map((_, i) => (
+              <tr key={`padding-${i}`} style={{ borderBottom: `1px solid ${borderColor}` }}>
+                <td className="px-2 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-3 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-4" style={{ borderRight: `1px solid ${borderColor}` }}></td>
+                <td className="px-2 py-4"></td>
+              </tr>
+            ))}
+            
+            {/* Stretching empty row (fills the remaining paper space) */}
+            <tr id="empty-stretch-row" className="empty-stretch-row" style={{ height: '100%' }}>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td style={{ borderRight: `1px solid ${borderColor}` }}></td>
+              <td></td>
             </tr>
-          )}
-
-          {/* Empty rows for formal look */}
-          {lineItems.length < 5 && Array.from({ length: 5 - lineItems.length - (shipping > 0 ? 1 : 0) }).map((_, i) => (
-            <tr key={`empty-${i}`} className="border-x-2 border-b" style={{ borderColor: '#e5e7eb' }}>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}>&nbsp;</td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="border-r px-2 py-2" style={{ borderColor: '#d1d5db' }}></td>
-              <td className="px-2 py-2"></td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
 
       {/* Tax + Totals Section */}
-      <div className="border-x-2 border-b-2" style={{ borderColor }}>
+      <div style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
         {/* Discount */}
         {discount.value > 0 && (
           <div className="flex border-b" style={{ borderColor: '#e5e7eb' }}>
@@ -295,9 +290,9 @@ export default function MinimalMono() {
         )}
 
         {/* Grand Total */}
-        <div className="flex border-t-2" style={{ borderColor }}>
+        <div className="flex" style={{ borderTop: `2px solid ${borderColor}` }}>
           <div className="flex-1"></div>
-          <div className="w-[280px] flex border-l-2" style={{ borderColor }}>
+          <div className="w-[280px] flex" style={{ borderLeft: `2px solid ${borderColor}` }}>
             <div className="flex-1 px-2 py-2 text-[11px] font-bold uppercase">Grand Total</div>
             <div className="w-20 px-2 py-2 text-right text-[12px] font-bold">{sym}{total.toFixed(2)}</div>
           </div>
@@ -313,9 +308,9 @@ export default function MinimalMono() {
                 <div className="w-20 px-2 py-1 text-right text-[10px] text-[#4b5563]">-{sym}{amountPaid.toFixed(2)}</div>
               </div>
             </div>
-            <div className="flex border-t-2" style={{ borderColor }}>
+            <div className="flex" style={{ borderTop: `2px solid ${borderColor}` }}>
               <div className="flex-1"></div>
-              <div className="w-[280px] flex border-l-2 bg-[#f3f4f6]" style={{ borderColor }}>
+              <div className="w-[280px] flex bg-[#f3f4f6]" style={{ borderLeft: `2px solid ${borderColor}` }}>
                 <div className="flex-1 px-2 py-2 text-[11px] font-bold uppercase">Balance Due</div>
                 <div className="w-20 px-2 py-2 text-right text-[12px] font-bold">{sym}{balanceDue.toFixed(2)}</div>
               </div>
@@ -325,7 +320,7 @@ export default function MinimalMono() {
       </div>
 
       {/* Amount in Words */}
-      <div className="border-x-2 border-b-2 px-3 py-2" style={{ borderColor }}>
+      <div className="px-3 py-2" style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
         <p className="text-[10px]">
           <span className="font-semibold">Amount (in words):</span>{' '}
           <span className="italic">{numberToWords(total)}</span>
@@ -333,7 +328,7 @@ export default function MinimalMono() {
       </div>
 
       {/* Bank Details + Signatory */}
-      <div className="border-x-2 border-b-2" style={{ borderColor }}>
+      <div style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
         <div className="flex">
           {/* Bank Details */}
           <div className="flex-1 p-3" style={{ borderRight: `1px solid ${borderColor}` }}>
@@ -341,6 +336,11 @@ export default function MinimalMono() {
             {paymentDetails.bankName && (
               <p className="text-[10px] text-[#374151]">
                 <span className="font-semibold">Bank:</span> {paymentDetails.bankName}
+              </p>
+            )}
+            {paymentDetails.bankAddress && (
+              <p className="text-[10px] text-[#374151]">
+                <span className="font-semibold">Branch:</span> {paymentDetails.bankAddress}
               </p>
             )}
             {paymentDetails.accountNumber && (
@@ -381,7 +381,7 @@ export default function MinimalMono() {
       </div>
 
       {/* Declaration + Notes */}
-      <div className="border-x-2 border-b-2 p-3" style={{ borderColor }}>
+      <div className="p-3" style={{ borderLeft: `2px solid ${borderColor}`, borderRight: `2px solid ${borderColor}`, borderBottom: `2px solid ${borderColor}` }}>
         <p className="text-[9px] font-bold mb-1 underline">Declaration:</p>
         {terms ? (
           <p className="text-[9px] text-[#4b5563] whitespace-pre-line">{terms}</p>
