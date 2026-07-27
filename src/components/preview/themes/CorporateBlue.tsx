@@ -182,6 +182,15 @@ export default function CorporateBlue() {
                 </div>
               )}
 
+              {tax.rate > 0 && (
+                <div className="flex justify-between px-2">
+                  <span className="text-[#64748B] font-bold uppercase tracking-wider">
+                    {tax.isGST ? 'Total Before GST' : 'Total Before Tax'}
+                  </span>
+                  <span className="font-bold">{fmt(subtotal - discountAmt)}</span>
+                </div>
+              )}
+
               {tax.rate > 0 && !tax.isGST && (
                 <div className="flex justify-between px-2">
                   <span className="text-[#64748B] font-bold uppercase tracking-wider">{tax.label} ({tax.rate}%)</span>

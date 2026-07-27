@@ -195,6 +195,15 @@ export default function BoldModern() {
                 </div>
               )}
 
+              {tax.rate > 0 && (
+                <div className="flex justify-between">
+                  <span className="font-bold uppercase tracking-widest text-[#737373]">
+                    {tax.isGST ? 'Total Before GST' : 'Total Before Tax'}
+                  </span>
+                  <span className="font-bold">{fmt(subtotal - discountAmt)}</span>
+                </div>
+              )}
+
               {tax.rate > 0 && !tax.isGST && (
                 <div className="flex justify-between">
                   <span className="font-bold uppercase tracking-widest text-[#737373]">{tax.label} ({tax.rate}%)</span>
