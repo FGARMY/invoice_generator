@@ -9,7 +9,7 @@ export default function TaxDiscount() {
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-        Tax, Discount & Shipping
+        Tax, Discount & Short & Access
       </h3>
 
       <div className="space-y-4">
@@ -114,7 +114,7 @@ export default function TaxDiscount() {
         {/* Shipping */}
         <div>
           <label className="block text-xs font-medium text-slate-400 mb-1">
-            Shipping
+            Shipping / Short & Access
           </label>
           <input
             type="number"

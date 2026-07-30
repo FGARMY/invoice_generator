@@ -229,9 +229,9 @@ export default function BoldModern() {
                 </div>
               )}
 
-              {shipping > 0 && (
+              {shipping !== 0 && (
                 <div className="flex justify-between">
-                  <span className="font-bold uppercase tracking-widest text-[#737373]">Shipping</span>
+                  <span className="font-bold uppercase tracking-widest text-[#737373]">Short & Access</span>
                   <span className="font-bold">{fmt(shipping)}</span>
                 </div>
               )}

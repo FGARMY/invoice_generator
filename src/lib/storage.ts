@@ -1,9 +1,9 @@
 import { Invoice, Client } from '@/types/invoice';
 
-const DRAFT_KEY = 'invoice-generator-draft';
+const DRAFT_KEY = 'invoice-generator-draft-v3';
 const CLIENTS_KEY = 'invoice-generator-clients';
 const SEQUENCE_KEY = 'invoice-generator-sequence';
-const BUSINESS_KEY = 'invoice-generator-business';
+const BUSINESS_KEY = 'invoice-generator-business-v3';
 
 // --- Draft Persistence ---
 

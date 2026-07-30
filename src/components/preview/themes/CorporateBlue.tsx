@@ -216,9 +216,9 @@ export default function CorporateBlue() {
                 </div>
               )}
 
-              {shipping > 0 && (
+              {shipping !== 0 && (
                 <div className="flex justify-between px-2">
-                  <span className="text-[#64748B] font-bold uppercase tracking-wider">Shipping</span>
+                  <span className="text-[#64748B] font-bold uppercase tracking-wider">Short & Access</span>
                   <span className="font-bold">{fmt(shipping)}</span>
                 </div>
               )}
