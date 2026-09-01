@@ -37,6 +37,7 @@ function numberToWords(num: number): string {
 export default function MinimalMono() {
   const store = useInvoiceStore();
   const {
+    documentTitle,
     invoiceNumber, invoiceDate, dueDate,
     business, client, lineItems,
     discount, tax, shipping,
@@ -66,7 +67,7 @@ export default function MinimalMono() {
     >
       {/* Top: Tax Invoice Title + Original Copy */}
       <div className="text-center mb-1">
-        <h1 className="text-[15px] font-bold tracking-wide">Tax Invoice</h1>
+        <h1 className="text-[15px] font-bold tracking-wide">{documentTitle || 'Tax Invoice'}</h1>
       </div>
       <div className="text-right text-[9px] text-[#6b7280] italic -mt-4 mb-2">Original Copy</div>
 

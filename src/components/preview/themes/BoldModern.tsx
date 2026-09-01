@@ -13,6 +13,7 @@ import {
 export default function BoldModern() {
   const store = useInvoiceStore();
   const {
+    documentTitle,
     invoiceNumber, invoiceDate, dueDate,
     business, client, lineItems,
     discount, tax, shipping,
@@ -43,7 +44,7 @@ export default function BoldModern() {
         <div className="border-b-[4px] border-[#000000] pb-8 mb-12 flex justify-between items-end">
           <div className="w-[60%]">
             <h1 className="text-[54px] font-black uppercase tracking-tighter leading-none mb-4">
-              INVOICE
+              {documentTitle || 'INVOICE'}
             </h1>
             <div className="grid grid-cols-3 gap-6 text-[10px]">
               <div>

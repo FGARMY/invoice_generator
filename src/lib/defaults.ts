@@ -83,6 +83,7 @@ export function generateInvoiceNumber(prefix: string, sequence: number): string 
 }
 
 export const defaultInvoice: Invoice = {
+  documentTitle: 'TAX INVOICE',
   invoiceNumber: 'DB/26-27/006',
   invoiceDate: '2026-07-24',
   dueDate: getDueDateISO(30),

@@ -13,6 +13,7 @@ import {
 export default function CorporateBlue() {
   const store = useInvoiceStore();
   const {
+    documentTitle,
     invoiceNumber, invoiceDate, dueDate,
     business, client, lineItems,
     discount, tax, shipping,
@@ -61,7 +62,7 @@ export default function CorporateBlue() {
           {/* Invoice Meta */}
           <div className="text-right flex flex-col justify-between items-end">
             <h2 className="text-[32px] font-black uppercase tracking-tight" style={{ color: primaryNavy }}>
-              INVOICE
+              {documentTitle || 'INVOICE'}
             </h2>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-right mt-4 text-[10px]">
               <div className="text-[#64748B] font-semibold uppercase tracking-wider">Invoice No</div>

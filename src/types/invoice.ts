@@ -54,6 +54,7 @@ export type InvoiceStatus = 'Draft' | 'Sent' | 'Paid' | 'Overdue';
 export type ThemeName = 'minimal-mono' | 'corporate-blue' | 'bold-modern';
 
 export interface Invoice {
+  documentTitle: string; // e.g. "TAX INVOICE"
   invoiceNumber: string;
   invoiceDate: string; // ISO date string
   dueDate: string; // ISO date string

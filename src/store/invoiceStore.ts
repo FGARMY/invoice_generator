@@ -51,6 +51,7 @@ interface InvoiceState extends Invoice {
   setFontFamily: (font: string) => void;
   setAmountPaid: (amount: number) => void;
   setInvoiceNumber: (number: string) => void;
+  setDocumentTitle: (title: string) => void;
   setInvoicePrefix: (prefix: string) => void;
   setInvoiceDate: (date: string) => void;
   setDueDate: (date: string) => void;
@@ -154,6 +155,7 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       return { amountPaid, ...recalcFields({ ...state, amountPaid }) };
     }),
   setInvoiceNumber: (invoiceNumber) => set({ invoiceNumber }),
+  setDocumentTitle: (documentTitle) => set({ documentTitle }),
 
   setInvoicePrefix: (prefix) =>
     set((state) => {
@@ -250,6 +252,7 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       getInvoiceData: _25,
       setFontFamily: _26,
       setAmountPaid: _27,
+      setDocumentTitle: _28,
       ...invoiceData
     } = state;
     return invoiceData as Invoice;

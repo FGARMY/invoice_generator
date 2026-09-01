@@ -4,12 +4,14 @@ import { useInvoiceStore } from '@/store/invoiceStore';
 
 export default function InvoiceMeta() {
   const {
+    documentTitle,
     invoiceNumber,
     invoiceDate,
     dueDate,
     status,
     currency,
     invoicePrefix,
+    setDocumentTitle,
     setInvoiceNumber,
     setInvoicePrefix,
     setInvoiceDate,
@@ -27,6 +29,20 @@ export default function InvoiceMeta() {
       </h3>
 
       <div className="grid grid-cols-2 gap-3">
+        {/* Document Title */}
+        <div className="col-span-2">
+          <label className="block text-xs font-medium text-slate-400 mb-1">
+            Document Title
+          </label>
+          <input
+            type="text"
+            value={documentTitle}
+            onChange={(e) => setDocumentTitle(e.target.value)}
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            placeholder="TAX INVOICE"
+          />
+        </div>
+
         {/* Invoice Number */}
         <div className="col-span-2">
           <label className="block text-xs font-medium text-slate-400 mb-1">
