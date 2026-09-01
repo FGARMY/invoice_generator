@@ -159,6 +159,39 @@ export default function ClientDetails() {
             />
           </div>
         </div>
+        <div className="pt-4 mt-4 border-t border-slate-700/50">
+          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+            Shipping Details (Optional)
+          </h4>
+          
+          <div className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
+                Shipping Address
+              </label>
+              <textarea
+                value={client.shippingAddress || ''}
+                onChange={(e) => updateClient({ shippingAddress: e.target.value })}
+                rows={2}
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+                placeholder="Leave blank to use billing address"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium text-slate-400 mb-1">
+                Shipping Email
+              </label>
+              <input
+                type="email"
+                value={client.shippingEmail || ''}
+                onChange={(e) => updateClient({ shippingEmail: e.target.value })}
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                placeholder="shipping@email.com"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

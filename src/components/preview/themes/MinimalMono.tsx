@@ -152,8 +152,11 @@ export default function MinimalMono() {
             <p className="text-[9px] font-bold text-[#6b7280] uppercase tracking-widest mb-1">Shipping Address</p>
             <p className="font-bold text-[12px]">{client.name || '—'}</p>
             {client.company && <p className="text-[10px] text-[#374151] font-medium">{client.company}</p>}
-            {client.address && (
-              <p className="text-[10px] text-[#4b5563] mt-0.5 whitespace-pre-line">{client.address}</p>
+            {(client.shippingAddress || client.address) && (
+              <p className="text-[10px] text-[#4b5563] mt-0.5 whitespace-pre-line">{client.shippingAddress || client.address}</p>
+            )}
+            {client.shippingEmail && (
+              <p className="text-[10px] text-[#4b5563] mt-0.5">{client.shippingEmail}</p>
             )}
           </div>
         </div>

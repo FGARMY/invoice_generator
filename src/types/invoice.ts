@@ -16,6 +16,8 @@ export interface Client {
   address: string;
   email: string;
   phone: string;
+  shippingAddress?: string;
+  shippingEmail?: string;
 }
 
 export interface LineItem {

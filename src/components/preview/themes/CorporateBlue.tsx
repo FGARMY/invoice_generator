@@ -77,18 +77,36 @@ export default function CorporateBlue() {
           </div>
         </div>
 
-        {/* Bill To Section */}
-        <div className="mb-12">
-          <h3 className="text-[9px] font-bold uppercase tracking-[0.2em] mb-4 text-[#64748B]">Billed To</h3>
-          <div className="border-l-4 pl-4" style={{ borderColor: primaryNavy }}>
-            <p className="text-[14px] font-bold">{client.name || 'Client Name'}</p>
-            {client.company && <p className="text-[12px] font-medium text-[#334155]">{client.company}</p>}
-            <div className="text-[10px] text-[#475569] mt-2 space-y-0.5">
-              {client.address && <p className="whitespace-pre-line">{client.address}</p>}
-              {client.email && <p>{client.email}</p>}
-              {client.phone && <p>{client.phone}</p>}
+        {/* Bill To / Ship To Section */}
+        <div className="mb-12 grid grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-[9px] font-bold uppercase tracking-[0.2em] mb-4 text-[#64748B]">Billed To</h3>
+            <div className="border-l-4 pl-4" style={{ borderColor: primaryNavy }}>
+              <p className="text-[14px] font-bold">{client.name || 'Client Name'}</p>
+              {client.company && <p className="text-[12px] font-medium text-[#334155]">{client.company}</p>}
+              <div className="text-[10px] text-[#475569] mt-2 space-y-0.5">
+                {client.address && <p className="whitespace-pre-line">{client.address}</p>}
+                {client.email && <p>{client.email}</p>}
+                {client.phone && <p>{client.phone}</p>}
+              </div>
             </div>
           </div>
+          
+          {(client.shippingAddress || client.shippingEmail) && (
+            <div>
+              <h3 className="text-[9px] font-bold uppercase tracking-[0.2em] mb-4 text-[#64748B]">Shipped To</h3>
+              <div className="border-l-4 pl-4" style={{ borderColor: primaryNavy }}>
+                <p className="text-[14px] font-bold">{client.name || 'Client Name'}</p>
+                {client.company && <p className="text-[12px] font-medium text-[#334155]">{client.company}</p>}
+                <div className="text-[10px] text-[#475569] mt-2 space-y-0.5">
+                  {(client.shippingAddress || client.address) && (
+                    <p className="whitespace-pre-line">{client.shippingAddress || client.address}</p>
+                  )}
+                  {client.shippingEmail && <p>{client.shippingEmail}</p>}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Line Items Table */}

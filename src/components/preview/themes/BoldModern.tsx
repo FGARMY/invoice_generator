@@ -79,20 +79,38 @@ export default function BoldModern() {
         </div>
 
         {/* Client Section */}
-        <div className="mb-12 flex">
-          <div className="w-1/2">
-            <h3 className="text-[9px] font-black uppercase tracking-[0.3em] mb-4 text-[#737373]">
-              Billed To
-            </h3>
-            <div className="text-[14px] font-bold uppercase tracking-tight mb-1">{client.name || 'Client Name'}</div>
-            {client.company && <div className="text-[12px] font-bold text-[#404040] mb-2">{client.company}</div>}
-            <div className="text-[10px] text-[#404040] space-y-0.5">
-              {client.address && <p className="whitespace-pre-line">{client.address}</p>}
-              {client.email && <p>{client.email}</p>}
-              {client.phone && <p>{client.phone}</p>}
+        <div className="mb-12 flex justify-between">
+          <div className="flex gap-12 w-2/3">
+            <div>
+              <h3 className="text-[9px] font-black uppercase tracking-[0.3em] mb-4 text-[#737373]">
+                Billed To
+              </h3>
+              <div className="text-[14px] font-bold uppercase tracking-tight mb-1">{client.name || 'Client Name'}</div>
+              {client.company && <div className="text-[12px] font-bold text-[#404040] mb-2">{client.company}</div>}
+              <div className="text-[10px] text-[#404040] space-y-0.5">
+                {client.address && <p className="whitespace-pre-line">{client.address}</p>}
+                {client.email && <p>{client.email}</p>}
+                {client.phone && <p>{client.phone}</p>}
+              </div>
             </div>
+            
+            {(client.shippingAddress || client.shippingEmail) && (
+              <div>
+                <h3 className="text-[9px] font-black uppercase tracking-[0.3em] mb-4 text-[#737373]">
+                  Shipped To
+                </h3>
+                <div className="text-[14px] font-bold uppercase tracking-tight mb-1">{client.name || 'Client Name'}</div>
+                {client.company && <div className="text-[12px] font-bold text-[#404040] mb-2">{client.company}</div>}
+                <div className="text-[10px] text-[#404040] space-y-0.5">
+                  {(client.shippingAddress || client.address) && (
+                    <p className="whitespace-pre-line">{client.shippingAddress || client.address}</p>
+                  )}
+                  {client.shippingEmail && <p>{client.shippingEmail}</p>}
+                </div>
+              </div>
+            )}
           </div>
-          <div className="w-1/2 flex justify-end items-start">
+          <div className="w-1/3 flex justify-end items-start">
              <div className="text-right p-6 border-2 border-[#000000]">
                 <h3 className="text-[9px] font-black uppercase tracking-[0.3em] mb-2 text-[#737373]">
                   Total Amount Due
