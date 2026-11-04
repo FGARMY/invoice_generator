@@ -4,6 +4,7 @@ const DRAFT_KEY = 'invoice-generator-draft-v3';
 const CLIENTS_KEY = 'invoice-generator-clients';
 const SEQUENCE_KEY = 'invoice-generator-sequence';
 const BUSINESS_KEY = 'invoice-generator-business-v3';
+const PAYMENT_KEY = 'invoice-generator-payment-v3';
 
 // --- Draft Persistence ---
 
@@ -95,6 +96,24 @@ export function loadBusinessInfo(): Invoice['business'] | null {
     if (data) return JSON.parse(data);
   } catch (e) {
     console.error('Failed to load business info:', e);
+  }
+  return null;
+}
+
+export function savePaymentInfo(paymentDetails: Invoice['paymentDetails']): void {
+  try {
+    localStorage.setItem(PAYMENT_KEY, JSON.stringify(paymentDetails));
+  } catch (e) {
+    console.error('Failed to save payment info:', e);
+  }
+}
+
+export function loadPaymentInfo(): Invoice['paymentDetails'] | null {
+  try {
+    const data = localStorage.getItem(PAYMENT_KEY);
+    if (data) return JSON.parse(data);
+  } catch (e) {
+    console.error('Failed to load payment info:', e);
   }
   return null;
 }

@@ -6,11 +6,12 @@ import InvoicePreview from '@/components/preview/InvoicePreview';
 import ThemePicker from '@/components/ui/ThemePicker';
 import ColorPicker from '@/components/ui/ColorPicker';
 import { useInvoiceStore } from '@/store/invoiceStore';
-import { loadBusinessInfo } from '@/lib/storage';
+import { loadBusinessInfo, loadPaymentInfo } from '@/lib/storage';
 
 export default function Home() {
   const loadFromDraft = useInvoiceStore((s) => s.loadFromDraft);
   const updateBusiness = useInvoiceStore((s) => s.updateBusiness);
+  const updatePaymentDetails = useInvoiceStore((s) => s.updatePaymentDetails);
   const resetInvoice = useInvoiceStore((s) => s.resetInvoice);
   const [mobileView, setMobileView] = useState<'form' | 'preview'>('form');
   const [showSettings, setShowSettings] = useState(false);
@@ -20,11 +21,15 @@ export default function Home() {
     // Load draft on mount
     const loaded = loadFromDraft();
 
-    // If no draft, try to load saved business info
+    // If no draft, try to load saved business & payment info
     if (!loaded) {
       const savedBusiness = loadBusinessInfo();
       if (savedBusiness) {
         updateBusiness(savedBusiness);
+      }
+      const savedPayment = loadPaymentInfo();
+      if (savedPayment) {
+        updatePaymentDetails(savedPayment);
       }
     }
 

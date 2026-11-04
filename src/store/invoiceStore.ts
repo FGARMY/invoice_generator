@@ -24,7 +24,14 @@ import {
   calcTaxAmount,
   calcGrandTotal,
 } from '@/lib/calculations';
-import { saveDraft, loadDraft, saveBusinessInfo } from '@/lib/storage';
+import {
+  saveDraft,
+  loadDraft,
+  saveBusinessInfo,
+  loadBusinessInfo,
+  savePaymentInfo,
+  loadPaymentInfo,
+} from '@/lib/storage';
 
 interface InvoiceState extends Invoice {
   // Prefix for invoice number generation
@@ -39,6 +46,7 @@ interface InvoiceState extends Invoice {
   addLineItem: () => void;
   removeLineItem: (id: string) => void;
   updateLineItem: (id: string, updates: Partial<LineItem>) => void;
+  setLineItems: (items: LineItem[]) => void;
   setDiscount: (discount: Partial<Discount>) => void;
   setTax: (tax: Partial<Tax>) => void;
   setShipping: (amount: number) => void;
@@ -121,6 +129,19 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       return { lineItems, ...recalcFields({ ...state, lineItems }) };
     }),
 
+  setLineItems: (items) =>
+    set((state) => {
+      const lineItems =
+        items.length > 0
+          ? items.map((item) => ({
+              ...item,
+              id: item.id || generateId(),
+              total: (item.quantity || 0) * (item.unitPrice || 0),
+            }))
+          : [createEmptyLineItem()];
+      return { lineItems, ...recalcFields({ ...state, lineItems }) };
+    }),
+
   setDiscount: (updates) =>
     set((state) => {
       const discount = { ...state.discount, ...updates };
@@ -142,9 +163,11 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   setTerms: (terms) => set({ terms }),
 
   updatePaymentDetails: (updates) =>
-    set((state) => ({
-      paymentDetails: { ...state.paymentDetails, ...updates },
-    })),
+    set((state) => {
+      const paymentDetails = { ...state.paymentDetails, ...updates };
+      savePaymentInfo(paymentDetails);
+      return { paymentDetails };
+    }),
 
   setCurrency: (currency) => set({ currency }),
   setTheme: (theme) => set({ theme }),
@@ -171,14 +194,18 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   setStatus: (status) => set({ status }),
 
   setLogo: (dataUrl) =>
-    set((state) => ({
-      business: { ...state.business, logoUrl: dataUrl },
-    })),
+    set((state) => {
+      const business = { ...state.business, logoUrl: dataUrl };
+      saveBusinessInfo(business);
+      return { business };
+    }),
 
   setSignature: (dataUrl) =>
-    set((state) => ({
-      business: { ...state.business, signatureUrl: dataUrl },
-    })),
+    set((state) => {
+      const business = { ...state.business, signatureUrl: dataUrl };
+      saveBusinessInfo(business);
+      return { business };
+    }),
 
   setIsExporting: (isExporting) => set({ isExporting }),
 
@@ -187,9 +214,24 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
 
   loadFromDraft: () => {
     const draft = loadDraft();
+    const savedBusiness = loadBusinessInfo();
+    const savedPayment = loadPaymentInfo();
     if (draft) {
+      const mergedBusiness = savedBusiness
+        ? {
+            ...draft.business,
+            ...savedBusiness,
+            logoUrl: savedBusiness.logoUrl || draft.business?.logoUrl || '',
+            signatureUrl: savedBusiness.signatureUrl || draft.business?.signatureUrl || '',
+          }
+        : draft.business;
+      const mergedPayment = savedPayment
+        ? { ...draft.paymentDetails, ...savedPayment }
+        : draft.paymentDetails;
       set({
         ...draft,
+        business: mergedBusiness,
+        paymentDetails: mergedPayment,
         ...recalcFields(draft),
       });
       return true;
@@ -229,6 +271,7 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       addLineItem: _3,
       removeLineItem: _4,
       updateLineItem: _5,
+      setLineItems: _5_a,
       setDiscount: _6,
       setTax: _7,
       setShipping: _8,
