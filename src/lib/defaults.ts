@@ -25,14 +25,14 @@ export function formatDateDisplay(isoDate: string): string {
 }
 
 export const defaultBusiness: Business = {
-  name: "ADE D BHARTY'S ENTERPRISES",
-  logoUrl: '',
-  signatureUrl: '',
-  address: "3rd Floor, Part of 2/224, Trilok Puri\nEast Delhi, Delhi - 110091\nState Name: Delhi",
+  name: "D BHARTY'S ENTERPRISES",
+  logoUrl: '/adbpack-logo.svg',
+  signatureUrl: '/signature.svg',
+  address: "3rd Floor, Part of 2/224, Trilok Puri\nEast Delhi, Delhi - 110091\nState Name : Delhi",
   email: '',
   phone: '',
   website: '',
-  taxId: 'GSTIN: 07ADZPU4004Q1Z6\nPAN/IT No: ADZPU4004G',
+  taxId: 'GSTIN : 07ADZPU4004G1Z6\nPAN/IT No : ADZPU4004G',
 };
 
 export const defaultClient: Client = {
@@ -68,7 +68,7 @@ export const defaultTax: Tax = {
 };
 
 export const defaultPaymentDetails: PaymentDetails = {
-  bankName: 'HDFC',
+  bankName: 'HDFC Bank',
   accountNumber: '50200077328410',
   ifscSwift: 'HDFC0004153',
   bankAddress: 'Club 5, DLF Phase 5, Gurugram',
@@ -77,9 +77,12 @@ export const defaultPaymentDetails: PaymentDetails = {
 };
 
 export function generateInvoiceNumber(prefix: string, sequence: number): string {
+  const seq = String(sequence).padStart(4, '0');
+  if (prefix.includes('/') || (prefix.includes('-') && /\d/.test(prefix))) {
+    return `${prefix}${seq}`;
+  }
   const year = new Date().getFullYear();
-  const seq = String(sequence).padStart(3, '0');
-  return `${prefix}${year}-${seq}`;
+  return `${prefix}${year}-${String(sequence).padStart(3, '0')}`;
 }
 
 export const defaultInvoice: Invoice = {
@@ -118,7 +121,7 @@ export const defaultInvoice: Invoice = {
   amountPaid: 0,
   balanceDue: 32823,
   notes: 'Short & Access: ₹0.12 (Adjusted in Total)\nAmount in Words: Thirty Two Thousand Eight Hundred Twenty Three Only',
-  terms: 'Payment is due within 30 days of the invoice date.',
+  terms: 'We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.',
   paymentDetails: { ...defaultPaymentDetails },
   currency: 'INR',
   theme: 'minimal-mono',

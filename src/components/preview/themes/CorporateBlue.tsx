@@ -44,13 +44,12 @@ export default function CorporateBlue() {
         <div className="grid grid-cols-2 gap-8 mb-12 border-b-2 pb-8" style={{ borderColor: primaryNavy }}>
           {/* Logo / Brand Name */}
           <div>
-            {business.logoUrl ? (
-              <img src={business.logoUrl} alt="Logo" className="max-h-16 max-w-[200px] object-contain mb-4" />
-            ) : (
-              <h1 className="text-[24px] font-black tracking-tight mb-4" style={{ color: primaryNavy }}>
-                {business.name || 'YOUR COMPANY'}
-              </h1>
+            {business.logoUrl && (
+              <img src={business.logoUrl} alt="Logo" className="max-h-16 max-w-[200px] object-contain mb-3" />
             )}
+            <h1 className="text-[22px] font-black tracking-tight mb-3" style={{ color: primaryNavy }}>
+              {business.name || 'YOUR COMPANY'}
+            </h1>
             <div className="text-[10px] text-[#475569] space-y-1">
               {business.address && <p className="whitespace-pre-line">{business.address}</p>}
               {business.email && <p>{business.email}</p>}

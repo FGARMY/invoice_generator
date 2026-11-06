@@ -87,11 +87,9 @@ export default function MinimalMono() {
               </div>
             )}
             <div>
-              {!business.logoUrl && (
-                <h2 className="text-[14px] font-bold uppercase tracking-wider">
-                  {business.name || 'Your Business Name'}
-                </h2>
-              )}
+              <h2 className="text-[14px] font-bold uppercase tracking-wider">
+                {business.name || 'Your Business Name'}
+              </h2>
               {business.address && (
                 <p className="text-[10px] text-[#4b5563] mt-0.5 whitespace-pre-line">{business.address}</p>
               )}

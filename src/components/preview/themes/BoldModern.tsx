@@ -62,13 +62,12 @@ export default function BoldModern() {
             </div>
           </div>
           <div className="w-[35%] text-right">
-            {business.logoUrl ? (
-              <img src={business.logoUrl} alt="Logo" className="max-h-20 w-auto object-contain ml-auto mb-4 grayscale" />
-            ) : (
-              <h2 className="text-[20px] font-bold uppercase tracking-tight mb-2">
-                {business.name || 'YOUR BUSINESS'}
-              </h2>
+            {business.logoUrl && (
+              <img src={business.logoUrl} alt="Logo" className="max-h-20 w-auto object-contain ml-auto mb-2 grayscale" />
             )}
+            <h2 className="text-[18px] font-bold uppercase tracking-tight mb-2">
+              {business.name || 'YOUR BUSINESS'}
+            </h2>
             <div className="text-[10px] text-[#404040]">
               {business.address && <p className="whitespace-pre-line mb-1">{business.address}</p>}
               {business.email && <p>{business.email}</p>}

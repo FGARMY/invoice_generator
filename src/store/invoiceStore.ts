@@ -89,7 +89,7 @@ function recalcFields(state: Partial<InvoiceState>): Partial<InvoiceState> {
 
 export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   ...defaultInvoice,
-  invoicePrefix: 'INV-',
+  invoicePrefix: 'DB/26-27/',
   isExporting: false,
 
   updateBusiness: (updates) =>
