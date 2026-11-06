@@ -94,8 +94,8 @@ export default function MinimalMono() {
                 <p className="text-[10px] text-[#4b5563] mt-0.5 whitespace-pre-line">{business.address}</p>
               )}
               {business.taxId && (
-                <p className="text-[10px] text-[#4b5563] mt-0.5">
-                  <span className="font-semibold">GSTIN:</span> {business.taxId}
+                <p className="text-[10px] text-[#4b5563] mt-0.5 whitespace-pre-line">
+                  {business.taxId.toUpperCase().includes('GSTIN') ? business.taxId : `GSTIN: ${business.taxId}`}
                 </p>
               )}
               {business.phone && (
@@ -347,33 +347,29 @@ export default function MinimalMono() {
         <div className="flex">
           {/* Bank Details */}
           <div className="flex-1 p-3" style={{ borderRight: `1px solid ${borderColor}` }}>
-            <p className="text-[10px] font-bold mb-1.5 underline">Bank Details:</p>
-            {paymentDetails.bankName && (
-              <p className="text-[10px] text-[#374151]">
-                <span className="font-semibold">Bank:</span> {paymentDetails.bankName}
-              </p>
-            )}
-            {paymentDetails.bankAddress && (
-              <p className="text-[10px] text-[#374151]">
-                <span className="font-semibold">Branch:</span> {paymentDetails.bankAddress}
-              </p>
-            )}
+            <p className="text-[10px] font-bold mb-1 underline">Bank Details :</p>
+            <p className="text-[10px] font-bold text-[#111827] mb-0.5">{business.name || "D Bharty's Enterprises"}</p>
             {paymentDetails.accountNumber && (
               <p className="text-[10px] text-[#374151]">
-                <span className="font-semibold">A/c No:</span> {paymentDetails.accountNumber}
+                <span className="font-semibold">{paymentDetails.bankName || 'HDFC Bank'} A/C No :</span> {paymentDetails.accountNumber}
               </p>
             )}
             {paymentDetails.ifscSwift && (
               <p className="text-[10px] text-[#374151]">
-                <span className="font-semibold">IFSC Code:</span> {paymentDetails.ifscSwift}
+                <span className="font-semibold">IFSC Code :</span> {paymentDetails.ifscSwift}
+              </p>
+            )}
+            {paymentDetails.bankAddress && (
+              <p className="text-[10px] text-[#374151] whitespace-pre-line">
+                {paymentDetails.bankAddress}
               </p>
             )}
             {paymentDetails.upiId && (
               <p className="text-[10px] text-[#374151]">
-                <span className="font-semibold">UPI:</span> {paymentDetails.upiId}
+                <span className="font-semibold">UPI ID :</span> {paymentDetails.upiId}
               </p>
             )}
-            {!paymentDetails.bankName && !paymentDetails.upiId && (
+            {!paymentDetails.accountNumber && !paymentDetails.upiId && (
               <p className="text-[10px] text-[#9ca3af] italic">No bank details provided</p>
             )}
           </div>

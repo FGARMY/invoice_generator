@@ -14,6 +14,8 @@ import {
 } from '@/types/invoice';
 import {
   defaultInvoice,
+  defaultBusiness,
+  defaultPaymentDetails,
   createEmptyLineItem,
   generateId,
   generateInvoiceNumber,
@@ -217,17 +219,24 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
     const savedBusiness = loadBusinessInfo();
     const savedPayment = loadPaymentInfo();
     if (draft) {
-      const mergedBusiness = savedBusiness
-        ? {
-            ...draft.business,
-            ...savedBusiness,
-            logoUrl: savedBusiness.logoUrl || draft.business?.logoUrl || '',
-            signatureUrl: savedBusiness.signatureUrl || draft.business?.signatureUrl || '',
-          }
-        : draft.business;
-      const mergedPayment = savedPayment
-        ? { ...draft.paymentDetails, ...savedPayment }
-        : draft.paymentDetails;
+      const mergedBusiness = {
+        ...defaultBusiness,
+        ...(draft.business || {}),
+        ...(savedBusiness || {}),
+        logoUrl:
+          savedBusiness?.logoUrl ||
+          draft.business?.logoUrl ||
+          defaultBusiness.logoUrl,
+        signatureUrl:
+          savedBusiness?.signatureUrl ||
+          draft.business?.signatureUrl ||
+          defaultBusiness.signatureUrl,
+      };
+      const mergedPayment = {
+        ...defaultPaymentDetails,
+        ...(draft.paymentDetails || {}),
+        ...(savedPayment || {}),
+      };
       set({
         ...draft,
         business: mergedBusiness,
