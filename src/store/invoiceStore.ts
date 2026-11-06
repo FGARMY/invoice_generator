@@ -219,18 +219,24 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
     const savedBusiness = loadBusinessInfo();
     const savedPayment = loadPaymentInfo();
     if (draft) {
+      const rawLogo = savedBusiness?.logoUrl || draft.business?.logoUrl;
+      const logoUrl =
+        !rawLogo || rawLogo === '/adbpack-logo.svg'
+          ? defaultBusiness.logoUrl
+          : rawLogo;
+
+      const rawSig = savedBusiness?.signatureUrl || draft.business?.signatureUrl;
+      const signatureUrl =
+        !rawSig || rawSig === '/signature.svg'
+          ? defaultBusiness.signatureUrl
+          : rawSig;
+
       const mergedBusiness = {
         ...defaultBusiness,
         ...(draft.business || {}),
         ...(savedBusiness || {}),
-        logoUrl:
-          savedBusiness?.logoUrl ||
-          draft.business?.logoUrl ||
-          defaultBusiness.logoUrl,
-        signatureUrl:
-          savedBusiness?.signatureUrl ||
-          draft.business?.signatureUrl ||
-          defaultBusiness.signatureUrl,
+        logoUrl,
+        signatureUrl,
       };
       const mergedPayment = {
         ...defaultPaymentDetails,

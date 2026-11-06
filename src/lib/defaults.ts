@@ -26,8 +26,8 @@ export function formatDateDisplay(isoDate: string): string {
 
 export const defaultBusiness: Business = {
   name: "D BHARTY'S ENTERPRISES",
-  logoUrl: '/adbpack-logo.svg',
-  signatureUrl: '/signature.svg',
+  logoUrl: '/logo.png',
+  signatureUrl: '/signature.png',
   address: "3rd Floor, Part of 2/224, Trilok Puri\nEast Delhi, Delhi - 110091\nState Name : Delhi",
   email: '',
   phone: '',
