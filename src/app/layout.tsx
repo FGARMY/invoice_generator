@@ -56,7 +56,22 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${playfair.variable} ${spaceGrotesk.variable} ${robotoMono.variable} ${outfit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-[var(--font-inter)]">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('invoice_app_theme') === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else {
+                  document.documentElement.classList.remove('dark');
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-[var(--font-inter)] bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
         {children}
       </body>
     </html>

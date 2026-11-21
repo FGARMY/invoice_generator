@@ -42,6 +42,11 @@ interface InvoiceState extends Invoice {
   // PDF export state
   isExporting: boolean;
 
+  // UI Theme mode: 'light' (default white theme) or 'dark'
+  appTheme: 'light' | 'dark';
+  setAppTheme: (theme: 'light' | 'dark') => void;
+  toggleAppTheme: () => void;
+
   // Actions
   updateBusiness: (business: Partial<Business>) => void;
   updateClient: (client: Partial<Client>) => void;
@@ -93,6 +98,27 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   ...defaultInvoice,
   invoicePrefix: 'DB/26-27/',
   isExporting: false,
+  appTheme: 'light',
+
+  setAppTheme: (theme) => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('invoice_app_theme', theme);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch {}
+    }
+    set({ appTheme: theme });
+  },
+
+  toggleAppTheme: () => {
+    const current = get().appTheme;
+    const next = current === 'dark' ? 'light' : 'dark';
+    get().setAppTheme(next);
+  },
 
   updateBusiness: (updates) =>
     set((state) => {
@@ -311,6 +337,9 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       setFontFamily: _26,
       setAmountPaid: _27,
       setDocumentTitle: _28,
+      appTheme: _appTheme,
+      setAppTheme: _setAppTheme,
+      toggleAppTheme: _toggleAppTheme,
       ...invoiceData
     } = state;
     return invoiceData as Invoice;

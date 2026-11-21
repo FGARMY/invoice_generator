@@ -25,7 +25,7 @@ export default function ColorPicker() {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+      <h3 className="theme-heading">
         Accent Color
       </h3>
 
@@ -40,8 +40,8 @@ export default function ColorPicker() {
             }}
             className={`w-7 h-7 rounded-lg transition-all duration-150 hover:scale-110 ${
               accentColor === color
-                ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900 scale-110'
-                : 'hover:ring-1 hover:ring-white/30'
+                ? 'ring-2 ring-slate-900 dark:ring-white ring-offset-2 ring-offset-white dark:ring-offset-slate-900 scale-110 shadow-sm'
+                : 'hover:ring-1 hover:ring-slate-400 dark:hover:ring-white/30'
             }`}
             style={{ backgroundColor: color }}
             title={color}
@@ -58,7 +58,7 @@ export default function ColorPicker() {
             setCustomColor(e.target.value);
             setAccentColor(e.target.value);
           }}
-          className="w-8 h-8 rounded-lg cursor-pointer border border-slate-700 bg-transparent"
+          className="w-8 h-8 rounded-lg cursor-pointer border border-slate-300 dark:border-slate-700 bg-transparent"
         />
         <input
           type="text"
@@ -69,7 +69,7 @@ export default function ColorPicker() {
               setAccentColor(e.target.value);
             }
           }}
-          className="flex-1 px-3 py-1.5 bg-slate-800/50 border border-slate-700 rounded-lg text-xs text-white font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+          className="flex-1 px-3 py-1.5 bg-white dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
           placeholder="#2563eb"
           maxLength={7}
         />

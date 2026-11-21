@@ -17,12 +17,12 @@ export default function LineItems() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+        <h3 className="theme-heading">
           Line Items
         </h3>
         <button
           onClick={addLineItem}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 rounded-lg transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-lg transition-colors"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -32,7 +32,7 @@ export default function LineItems() {
       </div>
 
       {/* Desktop Header */}
-      <div className="hidden sm:grid grid-cols-12 gap-2 text-xs font-medium text-slate-500 px-1">
+      <div className="hidden sm:grid grid-cols-12 gap-2 text-xs font-medium text-slate-500 dark:text-slate-400 px-1">
         <div className="col-span-4">Description</div>
         <div className="col-span-2">HSN/SAC</div>
         <div className="col-span-1 text-center">Qty</div>
@@ -46,11 +46,11 @@ export default function LineItems() {
         {lineItems.map((item, index) => (
           <div
             key={item.id}
-            className="p-3 sm:p-0 rounded-xl sm:rounded-none bg-slate-900/60 sm:bg-transparent border sm:border-0 border-slate-800 space-y-2.5 sm:space-y-0 sm:grid sm:grid-cols-12 sm:gap-2 sm:items-start group transition-all"
+            className="p-3 sm:p-0 rounded-xl sm:rounded-none bg-slate-50 sm:bg-transparent dark:bg-slate-900/60 border sm:border-0 border-slate-200 dark:border-slate-800 space-y-2.5 sm:space-y-0 sm:grid sm:grid-cols-12 sm:gap-2 sm:items-start group transition-all"
           >
             {/* Description */}
             <div className="sm:col-span-4">
-              <label className="block sm:hidden text-[11px] font-medium text-slate-400 mb-1">
+              <label className="block sm:hidden text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
                 Item Description #{index + 1}
               </label>
               <textarea
@@ -59,7 +59,7 @@ export default function LineItems() {
                   updateLineItem(item.id, { description: e.target.value })
                 }
                 rows={1}
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-y min-h-[38px]"
+                className="theme-input resize-y min-h-[38px]"
                 placeholder={index === 0 ? 'e.g. Web Design Service' : 'Item description'}
               />
             </div>
@@ -67,7 +67,7 @@ export default function LineItems() {
             {/* Mobile Second Row: HSN/SAC, Qty, Rate grouped */}
             <div className="grid grid-cols-12 gap-2 sm:contents">
               <div className="col-span-4 sm:col-span-2">
-                <label className="block sm:hidden text-[10px] font-medium text-slate-400 mb-1 truncate">
+                <label className="block sm:hidden text-[10px] font-medium text-slate-600 dark:text-slate-400 mb-1 truncate">
                   HSN/SAC
                 </label>
                 <input
@@ -76,13 +76,13 @@ export default function LineItems() {
                   onChange={(e) =>
                     updateLineItem(item.id, { hsnSac: e.target.value })
                   }
-                  className="w-full px-2.5 sm:px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="theme-input px-2.5 sm:px-3"
                   placeholder="HSN/SAC"
                 />
               </div>
 
               <div className="col-span-3 sm:col-span-1">
-                <label className="block sm:hidden text-[10px] font-medium text-slate-400 mb-1 text-center">
+                <label className="block sm:hidden text-[10px] font-medium text-slate-600 dark:text-slate-400 mb-1 text-center">
                   Qty
                 </label>
                 <input
@@ -96,13 +96,13 @@ export default function LineItems() {
                   }
                   min="0"
                   step="1"
-                  className="w-full px-2 sm:px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white text-center placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="theme-input px-2 sm:px-3 text-center"
                   placeholder="1"
                 />
               </div>
 
               <div className="col-span-5 sm:col-span-2">
-                <label className="block sm:hidden text-[10px] font-medium text-slate-400 mb-1 text-right">
+                <label className="block sm:hidden text-[10px] font-medium text-slate-600 dark:text-slate-400 mb-1 text-right">
                   Rate ({sym})
                 </label>
                 <input
@@ -116,17 +116,17 @@ export default function LineItems() {
                   }
                   min="0"
                   step="0.01"
-                  className="w-full px-2.5 sm:px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white text-right sm:text-center placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="theme-input px-2.5 sm:px-3 text-right sm:text-center"
                   placeholder="0.00"
                 />
               </div>
             </div>
 
             {/* Mobile Footer Row: Line Total & Delete button */}
-            <div className="flex items-center justify-between sm:contents pt-1 sm:pt-0 border-t border-slate-800/60 sm:border-0">
+            <div className="flex items-center justify-between sm:contents pt-1 sm:pt-0 border-t border-slate-200 dark:border-slate-800/60 sm:border-0">
               <div className="sm:col-span-2 text-left sm:text-right">
-                <span className="text-[11px] text-slate-400 sm:hidden">Total: </span>
-                <span className="text-sm text-slate-200 font-semibold">
+                <span className="text-[11px] text-slate-500 sm:hidden">Total: </span>
+                <span className="text-sm text-slate-800 dark:text-slate-200 font-semibold">
                   {sym}{(item.quantity * item.unitPrice).toFixed(2)}
                 </span>
               </div>
@@ -134,7 +134,7 @@ export default function LineItems() {
                 <button
                   type="button"
                   onClick={() => removeLineItem(item.id)}
-                  className="touch-target p-2 text-slate-400 sm:text-slate-600 hover:text-red-400 sm:opacity-0 sm:group-hover:opacity-100 transition-all rounded-lg hover:bg-red-500/10"
+                  className="touch-target p-2 text-slate-400 sm:text-slate-400 hover:text-red-500 dark:hover:text-red-400 sm:opacity-0 sm:group-hover:opacity-100 transition-all rounded-lg hover:bg-red-500/10"
                   title="Remove item"
                   aria-label="Remove item"
                 >

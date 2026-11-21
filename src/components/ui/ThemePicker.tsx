@@ -36,8 +36,8 @@ export default function ThemePicker() {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-        Theme
+      <h3 className="theme-heading">
+        Invoice PDF Theme
       </h3>
       <div className="grid grid-cols-3 gap-3">
         {themes.map((theme) => {
@@ -52,12 +52,12 @@ export default function ThemePicker() {
               onClick={() => setTheme(theme.id)}
               className={`group relative p-3 rounded-xl border-2 transition-all duration-200 text-left ${
                 isActive
-                  ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/10'
-                  : 'border-slate-700 hover:border-slate-600 bg-slate-800/50 hover:bg-slate-800'
+                  ? 'border-blue-500 bg-blue-500/5 shadow-md shadow-blue-500/10'
+                  : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
               {/* Mini Preview Thumbnail */}
-              <div className="w-full aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-white relative">
+              <div className="w-full aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-white relative border border-slate-200 shadow-2xs">
                 {/* Header bar */}
                 <div
                   className="h-[30%] w-full"
@@ -79,8 +79,8 @@ export default function ThemePicker() {
                 </div>
               </div>
 
-              <p className="text-xs font-semibold text-white">{theme.name}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5">{theme.description}</p>
+              <p className="text-xs font-semibold text-slate-900 dark:text-white">{theme.name}</p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">{theme.description}</p>
 
               {isActive && (
                 <div className="absolute top-2 right-2 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">

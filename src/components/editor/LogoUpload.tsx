@@ -70,13 +70,13 @@ export default function LogoUpload() {
 
   return (
     <div className="space-y-3">
-      <label className="block text-xs font-medium text-slate-400 mb-1">
+      <label className="theme-label">
         Logo
       </label>
 
       <div className="flex items-center gap-4">
         {/* Logo Preview */}
-        <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-800 border border-slate-700 flex items-center justify-center flex-shrink-0">
+        <div className="w-16 h-16 rounded-xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center flex-shrink-0 shadow-2xs">
           {business.logoUrl ? (
             <img
               src={business.logoUrl}
@@ -98,14 +98,14 @@ export default function LogoUpload() {
         <div className="flex flex-col gap-2">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+            className="px-3 py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-white border border-slate-200 dark:border-transparent rounded-lg transition-colors"
           >
             Upload Logo
           </button>
           {business.logoUrl && (
             <button
               onClick={removeLogo}
-              className="px-3 py-1.5 text-xs font-medium text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+              className="px-3 py-1.5 text-xs font-medium text-red-500 hover:text-red-600 hover:bg-red-500/10 rounded-lg transition-colors"
             >
               Remove
             </button>

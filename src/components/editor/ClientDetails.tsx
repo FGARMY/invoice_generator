@@ -38,14 +38,14 @@ export default function ClientDetails() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+        <h3 className="theme-heading">
           Bill To
         </h3>
         <div className="flex gap-2">
           {savedClients.length > 0 && (
             <button
               onClick={() => setShowSaved(!showSaved)}
-              className="px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 rounded-lg transition-colors"
+              className="px-2.5 py-1 text-xs font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 rounded-lg transition-colors"
             >
               {showSaved ? 'Close' : 'Saved Clients'}
             </button>
@@ -53,7 +53,7 @@ export default function ClientDetails() {
           <button
             onClick={handleSaveClient}
             disabled={!client.name.trim()}
-            className="px-2.5 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-2.5 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Save Client
           </button>
@@ -62,18 +62,18 @@ export default function ClientDetails() {
 
       {/* Saved clients dropdown */}
       {showSaved && savedClients.length > 0 && (
-        <div className="bg-slate-800/80 border border-slate-700 rounded-lg overflow-hidden max-h-40 overflow-y-auto">
+        <div className="bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden max-h-40 overflow-y-auto shadow-sm">
           {savedClients.map((saved) => (
             <div
               key={saved.id}
-              className="flex items-center justify-between px-3 py-2 hover:bg-slate-700/50 cursor-pointer transition-colors"
+              className="flex items-center justify-between px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors"
             >
               <div
                 onClick={() => handleSelectClient(saved)}
                 className="flex-1 min-w-0"
               >
-                <div className="text-sm text-white truncate">{saved.name}</div>
-                <div className="text-xs text-slate-400 truncate">
+                <div className="text-sm text-slate-900 dark:text-white truncate">{saved.name}</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400 truncate">
                   {saved.company || saved.email}
                 </div>
               </div>
@@ -82,7 +82,7 @@ export default function ClientDetails() {
                   e.stopPropagation();
                   handleDeleteClient(saved.id);
                 }}
-                className="ml-2 p-1 text-red-400/60 hover:text-red-400 transition-colors"
+                className="ml-2 p-1 text-red-500/60 hover:text-red-500 transition-colors"
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -95,47 +95,47 @@ export default function ClientDetails() {
 
       <div className="space-y-3">
         <div>
-          <label className="block text-xs font-medium text-slate-400 mb-1">
+          <label className="theme-label">
             Client Name *
           </label>
           <input
             type="text"
             value={client.name}
             onChange={(e) => updateClient({ name: e.target.value })}
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="theme-input"
             placeholder="John Doe"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-400 mb-1">
+          <label className="theme-label">
             Company
           </label>
           <input
             type="text"
             value={client.company}
             onChange={(e) => updateClient({ company: e.target.value })}
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="theme-input"
             placeholder="Company Inc."
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-slate-400 mb-1">
+          <label className="theme-label">
             Address
           </label>
           <textarea
             value={client.address}
             onChange={(e) => updateClient({ address: e.target.value })}
             rows={2}
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+            className="theme-input resize-none"
             placeholder="456 Client Ave, City, State - ZIP"
           />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">
+            <label className="theme-label">
               Email
             </label>
             <input
@@ -143,12 +143,12 @@ export default function ClientDetails() {
               inputMode="email"
               value={client.email}
               onChange={(e) => updateClient({ email: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+              className="theme-input"
               placeholder="client@email.com"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-400 mb-1">
+            <label className="theme-label">
               Phone
             </label>
             <input
@@ -156,32 +156,32 @@ export default function ClientDetails() {
               inputMode="tel"
               value={client.phone}
               onChange={(e) => updateClient({ phone: e.target.value })}
-              className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+              className="theme-input"
               placeholder="+91 98765 43210"
             />
           </div>
         </div>
-        <div className="pt-4 mt-4 border-t border-slate-700/50">
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+        <div className="pt-4 mt-4 border-t border-slate-200 dark:border-slate-700/50">
+          <h4 className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
             Shipping Details (Optional)
           </h4>
           
           <div className="space-y-3">
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">
+              <label className="theme-label">
                 Shipping Address
               </label>
               <textarea
                 value={client.shippingAddress || ''}
                 onChange={(e) => updateClient({ shippingAddress: e.target.value })}
                 rows={2}
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+                className="theme-input resize-none"
                 placeholder="Leave blank to use billing address"
               />
             </div>
             
             <div>
-              <label className="block text-xs font-medium text-slate-400 mb-1">
+              <label className="theme-label">
                 Shipping Email
               </label>
               <input
@@ -189,7 +189,7 @@ export default function ClientDetails() {
                 inputMode="email"
                 value={client.shippingEmail || ''}
                 onChange={(e) => updateClient({ shippingEmail: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                className="theme-input"
                 placeholder="shipping@email.com"
               />
             </div>

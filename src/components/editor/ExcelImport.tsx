@@ -239,7 +239,7 @@ export default function ExcelImport() {
               />
             </svg>
           </div>
-          <h3 className="text-sm font-semibold text-slate-300 uppercase tracking-wider">
+          <h3 className="theme-heading">
             Import from Excel (.xlsx)
           </h3>
         </div>
@@ -247,10 +247,10 @@ export default function ExcelImport() {
         <button
           type="button"
           onClick={downloadSampleXlsx}
-          className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition-colors"
+          className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors"
           title="Download sample .xlsx template"
         >
-          <svg className="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -276,7 +276,7 @@ export default function ExcelImport() {
             ? 'border-emerald-400 bg-emerald-500/10'
             : fileName
             ? 'border-emerald-500/40 bg-emerald-500/5 hover:border-emerald-500/60'
-            : 'border-slate-700/80 bg-slate-800/30 hover:border-blue-500/50 hover:bg-slate-800/60'
+            : 'border-slate-300 dark:border-slate-700/80 bg-slate-50/60 dark:bg-slate-800/30 hover:border-blue-500/50 hover:bg-slate-100/60 dark:hover:bg-slate-800/60'
         }`}
       >
         <input
@@ -289,7 +289,7 @@ export default function ExcelImport() {
 
         {!fileName ? (
           <div className="space-y-1.5">
-            <div className="mx-auto w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-blue-400">
+            <div className="mx-auto w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-blue-500">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
@@ -299,26 +299,26 @@ export default function ExcelImport() {
                 />
               </svg>
             </div>
-            <p className="text-xs font-medium text-slate-300">
-              Click to upload or drag &amp; drop your <span className="text-emerald-400">.xlsx</span> or{' '}
-              <span className="text-emerald-400">.csv</span> file
+            <p className="text-xs font-medium text-slate-700 dark:text-slate-300">
+              Click to upload or drag &amp; drop your <span className="text-emerald-600 dark:text-emerald-400 font-semibold">.xlsx</span> or{' '}
+              <span className="text-emerald-600 dark:text-emerald-400 font-semibold">.csv</span> file
             </p>
-            <p className="text-[11px] text-slate-500">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
               Auto-fills Invoice Number &amp; Name, Client Details, and Product Descriptions
             </p>
           </div>
         ) : (
           <div className="flex items-center justify-between text-left" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-semibold text-white truncate">{fileName}</p>
+                <p className="text-xs font-semibold text-slate-900 dark:text-white truncate">{fileName}</p>
                 {activeInvoice && (
-                  <p className="text-[11px] text-emerald-400 truncate">
+                  <p className="text-[11px] text-emerald-600 dark:text-emerald-400 truncate">
                     Loaded: {activeInvoice.invoiceNumber ? `#${activeInvoice.invoiceNumber} • ` : ''}
                     {activeInvoice.client.name || 'Client'} ({activeInvoice.lineItems.length} item
                     {activeInvoice.lineItems.length !== 1 ? 's' : ''})
@@ -331,14 +331,14 @@ export default function ExcelImport() {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="px-2 py-1 text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md transition-colors"
+                className="px-2 py-1 text-[11px] font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-300 rounded-md transition-colors border border-slate-200 dark:border-slate-700"
               >
                 Change
               </button>
               <button
                 type="button"
                 onClick={clearUpload}
-                className="p-1 text-slate-400 hover:text-red-400 rounded-md transition-colors"
+                className="p-1 text-slate-400 hover:text-red-500 rounded-md transition-colors"
                 title="Clear uploaded file"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -381,17 +381,17 @@ export default function ExcelImport() {
 
           {/* Invoice / Row selector when multiple distinct invoices/rows are detected */}
           {parseResult.invoices.length > 1 && (
-            <div className="space-y-2 bg-slate-800/40 p-2.5 rounded-lg border border-slate-700/60">
+            <div className="space-y-2 bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-lg border border-slate-200 dark:border-slate-700/60">
               <div className="flex items-center justify-between">
-                <label className="text-[11px] font-medium text-slate-300">
+                <label className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
                   Select Invoice / Row ({parseResult.invoices.length} found)
                 </label>
-                <label className="flex items-center gap-1.5 text-[11px] text-slate-400 cursor-pointer">
+                <label className="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={combineAllRows}
                     onChange={(e) => handleToggleCombine(e.target.checked)}
-                    className="rounded border-slate-600 bg-slate-800 text-blue-500 focus:ring-0"
+                    className="rounded border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-blue-600 focus:ring-0"
                   />
                   Combine all rows
                 </label>
@@ -401,7 +401,7 @@ export default function ExcelImport() {
                 <select
                   value={selectedInvoiceIdx}
                   onChange={(e) => handleSelectInvoice(parseInt(e.target.value, 10))}
-                  className="w-full px-2.5 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-[16px] sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                  className="w-full px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-[16px] sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 >
                   {parseResult.invoices.map((inv, idx) => (
                     <option key={inv.id} value={idx}>
@@ -422,14 +422,14 @@ export default function ExcelImport() {
               <button
                 type="button"
                 onClick={() => setShowMapper(!showMapper)}
-                className="text-xs font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
               >
                 {showMapper ? 'Hide Column Mapping' : 'Customize Column Mapping'}
               </button>
             </div>
           ) : (
             <div className="flex items-center justify-between">
-              <span className="text-[11px] text-emerald-400/90 font-medium">
+              <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
                 ✓ Tax Invoice layout auto-detected ({parseResult.invoices.length} invoice
                 {parseResult.invoices.length !== 1 ? 's' : ''})
               </span>
@@ -437,22 +437,22 @@ export default function ExcelImport() {
           )}
 
           {showMapper && (
-            <div className="p-3 bg-slate-800/60 border border-slate-700 rounded-lg space-y-2.5 max-h-64 overflow-y-auto">
-              <p className="text-[11px] text-slate-400">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-lg space-y-2.5 max-h-64 overflow-y-auto">
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
                 Match your Excel columns to Invoice fields:
               </p>
               <div className="grid grid-cols-1 gap-2">
                 {FIELD_LABELS.map((field) => {
                   const mappedCol = parseResult.mapping[field.key];
                   return (
-                    <div key={field.key} className="flex flex-col sm:grid sm:grid-cols-12 gap-1 sm:gap-2 sm:items-center py-1 sm:py-0 border-b border-slate-800 sm:border-0">
-                      <label className="sm:col-span-5 text-[11px] text-slate-300 truncate" title={field.label}>
+                    <div key={field.key} className="flex flex-col sm:grid sm:grid-cols-12 gap-1 sm:gap-2 sm:items-center py-1 sm:py-0 border-b border-slate-200 dark:border-slate-800 sm:border-0">
+                      <label className="sm:col-span-5 text-[11px] text-slate-700 dark:text-slate-300 truncate" title={field.label}>
                         {field.label}
                       </label>
                       <select
                         value={mappedCol !== undefined ? String(mappedCol) : ''}
                         onChange={(e) => handleMappingChange(field.key, e.target.value)}
-                        className="sm:col-span-7 px-2 py-1.5 sm:py-1 bg-slate-900 border border-slate-700 rounded text-[16px] sm:text-xs text-white focus:outline-none focus:border-blue-500"
+                        className="sm:col-span-7 px-2 py-1.5 sm:py-1 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded text-[16px] sm:text-xs text-slate-800 dark:text-white focus:outline-none focus:border-blue-500"
                       >
                         <option value="">-- Not Mapped --</option>
                         {parseResult.headers.map((h, cIdx) => (
