@@ -27,7 +27,7 @@ export default function NotesTerms() {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
             placeholder="Thank you for your business!"
           />
         </div>
@@ -40,14 +40,14 @@ export default function NotesTerms() {
             value={terms}
             onChange={(e) => setTerms(e.target.value)}
             rows={2}
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all resize-none"
             placeholder="Payment is due within 30 days..."
           />
         </div>
 
         {/* Payment Details Accordion */}
         <details className="group">
-          <summary className="cursor-pointer text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors flex items-center gap-1">
+          <summary className="cursor-pointer text-xs font-medium text-slate-400 hover:text-slate-300 transition-colors flex items-center gap-1 py-1">
             <svg
               className="w-3.5 h-3.5 transition-transform group-open:rotate-90"
               fill="none"
@@ -65,7 +65,7 @@ export default function NotesTerms() {
           </summary>
 
           <div className="mt-3 space-y-3 pl-1">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">
                   Bank Name
@@ -76,7 +76,7 @@ export default function NotesTerms() {
                   onChange={(e) =>
                     updatePaymentDetails({ bankName: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                   placeholder="State Bank of India"
                 />
               </div>
@@ -86,17 +86,18 @@ export default function NotesTerms() {
                 </label>
                 <input
                   type="text"
+                  inputMode="numeric"
                   value={paymentDetails.accountNumber}
                   onChange={(e) =>
                     updatePaymentDetails({ accountNumber: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                   placeholder="1234567890"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-slate-400 mb-1">
                   IFSC / SWIFT
@@ -107,7 +108,7 @@ export default function NotesTerms() {
                   onChange={(e) =>
                     updatePaymentDetails({ ifscSwift: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                   placeholder="SBIN0001234"
                 />
               </div>
@@ -121,7 +122,7 @@ export default function NotesTerms() {
                   onChange={(e) =>
                     updatePaymentDetails({ upiId: e.target.value })
                   }
-                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                  className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                   placeholder="business@upi"
                 />
               </div>
@@ -137,7 +138,7 @@ export default function NotesTerms() {
                 onChange={(e) =>
                   updatePaymentDetails({ bankAddress: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                 placeholder="123 Bank Street, City"
               />
             </div>
@@ -148,11 +149,12 @@ export default function NotesTerms() {
               </label>
               <input
                 type="url"
+                inputMode="url"
                 value={paymentDetails.paymentLink}
                 onChange={(e) =>
                   updatePaymentDetails({ paymentLink: e.target.value })
                 }
-                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                 placeholder="https://pay.example.com/invoice"
               />
             </div>

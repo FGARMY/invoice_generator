@@ -368,7 +368,7 @@ export default function ExcelImport() {
               <select
                 value={parseResult.activeSheetIndex}
                 onChange={(e) => handleSheetChange(parseInt(e.target.value, 10))}
-                className="w-full px-2.5 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className="w-full px-2.5 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-[16px] sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               >
                 {parseResult.sheets.map((s, idx) => (
                   <option key={s.name + idx} value={idx}>
@@ -401,7 +401,7 @@ export default function ExcelImport() {
                 <select
                   value={selectedInvoiceIdx}
                   onChange={(e) => handleSelectInvoice(parseInt(e.target.value, 10))}
-                  className="w-full px-2.5 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                  className="w-full px-2.5 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-[16px] sm:text-xs text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                 >
                   {parseResult.invoices.map((inv, idx) => (
                     <option key={inv.id} value={idx}>
@@ -445,14 +445,14 @@ export default function ExcelImport() {
                 {FIELD_LABELS.map((field) => {
                   const mappedCol = parseResult.mapping[field.key];
                   return (
-                    <div key={field.key} className="grid grid-cols-12 items-center gap-2">
-                      <label className="col-span-5 text-[11px] text-slate-300 truncate" title={field.label}>
+                    <div key={field.key} className="flex flex-col sm:grid sm:grid-cols-12 gap-1 sm:gap-2 sm:items-center py-1 sm:py-0 border-b border-slate-800 sm:border-0">
+                      <label className="sm:col-span-5 text-[11px] text-slate-300 truncate" title={field.label}>
                         {field.label}
                       </label>
                       <select
                         value={mappedCol !== undefined ? String(mappedCol) : ''}
                         onChange={(e) => handleMappingChange(field.key, e.target.value)}
-                        className="col-span-7 px-2 py-1 bg-slate-900 border border-slate-700 rounded text-xs text-white focus:outline-none focus:border-blue-500"
+                        className="sm:col-span-7 px-2 py-1.5 sm:py-1 bg-slate-900 border border-slate-700 rounded text-[16px] sm:text-xs text-white focus:outline-none focus:border-blue-500"
                       >
                         <option value="">-- Not Mapped --</option>
                         {parseResult.headers.map((h, cIdx) => (

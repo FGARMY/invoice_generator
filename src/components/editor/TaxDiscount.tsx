@@ -42,13 +42,14 @@ export default function TaxDiscount() {
           </div>
           <input
             type="number"
+            inputMode="decimal"
             value={discount.value || ''}
             onChange={(e) =>
               setDiscount({ value: parseFloat(e.target.value) || 0 })
             }
             min="0"
             step="0.01"
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             placeholder={discount.type === 'percent' ? '0%' : '0.00'}
           />
         </div>
@@ -56,17 +57,18 @@ export default function TaxDiscount() {
         {/* Tax */}
         <div className="p-3 bg-slate-800/30 rounded-lg border border-slate-700/50 space-y-3">
           <label className="text-xs font-medium text-slate-400">Tax</label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input
               type="text"
               value={tax.label}
               onChange={(e) => setTax({ label: e.target.value })}
-              className="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+              className="px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
               placeholder="Tax label (e.g. GST)"
             />
             <div className="relative">
               <input
                 type="number"
+                inputMode="decimal"
                 value={tax.rate || ''}
                 onChange={(e) =>
                   setTax({ rate: parseFloat(e.target.value) || 0 })
@@ -74,7 +76,7 @@ export default function TaxDiscount() {
                 min="0"
                 max="100"
                 step="0.5"
-                className="w-full px-3 py-2 pr-8 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+                className="w-full px-3 py-2 pr-8 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
                 placeholder="0"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-500">
@@ -118,11 +120,12 @@ export default function TaxDiscount() {
           </label>
           <input
             type="number"
+            inputMode="decimal"
             value={shipping || ''}
             onChange={(e) => setShipping(parseFloat(e.target.value) || 0)}
             min="0"
             step="0.01"
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             placeholder="0.00"
           />
         </div>
@@ -134,11 +137,12 @@ export default function TaxDiscount() {
           </label>
           <input
             type="number"
+            inputMode="decimal"
             value={amountPaid || ''}
             onChange={(e) => setAmountPaid(parseFloat(e.target.value) || 0)}
             min="0"
             step="0.01"
-            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-[16px] sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
             placeholder="0.00"
           />
         </div>

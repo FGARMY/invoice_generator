@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { exportToPDF } from '@/lib/pdfExport';
 import { useElementSize } from '@/hooks/useElementSize';
@@ -22,12 +22,22 @@ export default function InvoicePreview() {
   const client = useInvoiceStore((s) => s.client);
   const lineItems = useInvoiceStore((s) => s.lineItems);
   const [validationError, setValidationError] = useState<string | null>(null);
-  
+  const [mobileZoomMode, setMobileZoomMode] = useState<'fit' | 'fill'>('fit');
+  const [canShare, setCanShare] = useState(false);
+
+  // Check Web Share API support on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'share' in navigator) {
+      setCanShare(true);
+    }
+  }, []);
+
   // Responsive scaling logic
   const [containerRef, { width: containerWidth }] = useElementSize();
   const A4_WIDTH_PX = 794; // 210mm at 96dpi
-  const padding = 32; // 16px padding on each side
-  const scale = containerWidth > 0 ? Math.min(1, (containerWidth - padding) / A4_WIDTH_PX) : 1;
+  const padding = 24;
+  const autoScale = containerWidth > 0 ? Math.min(1, (containerWidth - padding) / A4_WIDTH_PX) : 1;
+  const scale = mobileZoomMode === 'fill' ? Math.max(autoScale, 0.95) : autoScale;
 
   const [contentRef, { height: contentHeight }] = useElementSize();
   
@@ -72,15 +82,53 @@ export default function InvoicePreview() {
     window.print();
   }, []);
 
+  const handleShare = useCallback(async () => {
+    if (!validate()) return;
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: `Invoice #${invoiceNumber}`,
+          text: `Invoice #${invoiceNumber} for ${client.name}`,
+          url: window.location.href,
+        });
+      }
+    } catch {
+      // User cancelled share or not supported
+    }
+  }, [validate, invoiceNumber, client]);
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Action Bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-slate-900/80 border-b border-slate-800 print:hidden">
-        <h2 className="text-sm font-semibold text-slate-300">Preview</h2>
-        <div className="flex gap-2">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 bg-slate-900/90 border-b border-slate-800 print:hidden flex-shrink-0 z-20">
+        <div className="flex items-center gap-2">
+          <h2 className="text-xs sm:text-sm font-semibold text-slate-300">Preview</h2>
+          {/* Mobile Zoom Mode Toggle */}
+          <button
+            type="button"
+            onClick={() => setMobileZoomMode(mobileZoomMode === 'fit' ? 'fill' : 'fit')}
+            className="sm:hidden px-2 py-0.5 text-[10px] font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-md border border-slate-700"
+          >
+            {mobileZoomMode === 'fit' ? 'Zoom 100%' : 'Fit Page'}
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {canShare && (
+            <button
+              onClick={handleShare}
+              className="touch-target sm:hidden p-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors border border-slate-700"
+              title="Share invoice link"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
+          )}
+
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition-colors"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -90,7 +138,7 @@ export default function InvoicePreview() {
           <button
             onClick={handleExport}
             disabled={isExporting}
-            className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-500 disabled:bg-blue-600/50 disabled:cursor-wait text-white rounded-lg transition-colors shadow-lg shadow-blue-600/20"
+            className="touch-target flex items-center gap-1.5 px-3 sm:px-4 py-1.5 text-xs font-semibold bg-blue-600 hover:bg-blue-500 disabled:bg-blue-600/50 disabled:cursor-wait text-white rounded-lg transition-colors shadow-lg shadow-blue-600/20"
           >
             {isExporting ? (
               <>
@@ -98,14 +146,14 @@ export default function InvoicePreview() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-                Exporting...
+                <span>Exporting...</span>
               </>
             ) : (
               <>
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Download PDF
+                <span>Download PDF</span>
               </>
             )}
           </button>

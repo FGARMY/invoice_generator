@@ -61,9 +61,26 @@
   }
 }
 
+/* === Dynamic Viewport & Momentum Scrolling === */
+html, body {
+  height: 100%;
+  min-height: 100dvh;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* === Touch Target Sizing (WCAG 2.1 AA) === */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* === Smooth Animations === */
 * {
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* === Date input dark mode fix === */
