@@ -72,8 +72,12 @@ export default function CorporateBlue() {
               <div className="text-[#64748B] font-semibold uppercase tracking-wider">Date</div>
               <div className="font-bold">{formatDateDisplay(invoiceDate)}</div>
               
-              <div className="text-[#64748B] font-semibold uppercase tracking-wider">Due Date</div>
-              <div className="font-bold">{formatDateDisplay(dueDate)}</div>
+              {dueDate ? (
+                <>
+                  <div className="text-[#64748B] font-semibold uppercase tracking-wider">Due Date</div>
+                  <div className="font-bold">{formatDateDisplay(dueDate)}</div>
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -127,7 +131,7 @@ export default function CorporateBlue() {
                 <tr key={item.id} className="border-b" style={{ borderColor: neutralBorder }}>
                   <td className="py-4 px-2">
                     <span className="font-bold text-[#0F172A] whitespace-pre-line">
-                      {item.description || <span className="text-[#CBD5E1] italic">No description</span>}
+                      {item.description || ''}
                     </span>
                   </td>
                   {hasHsnSac && (

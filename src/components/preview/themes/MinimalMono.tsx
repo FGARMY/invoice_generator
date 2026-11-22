@@ -104,7 +104,7 @@ export default function MinimalMono() {
               <div className="flex-1 px-2 py-1.5 font-semibold">P.O No.</div>
             </div>
             <div className="flex">
-              <div className="flex-1 px-2 py-1.5" style={{ borderRight: `1px solid ${borderColor}` }}>{formatDateDisplay(dueDate)}</div>
+              <div className="flex-1 px-2 py-1.5" style={{ borderRight: `1px solid ${borderColor}` }}>{dueDate ? formatDateDisplay(dueDate) : '—'}</div>
               <div className="flex-1 px-2 py-1.5">—</div>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default function MinimalMono() {
                 <tr key={item.id}>
                   <td className="px-2 py-2 text-center text-[#4b5563]" style={{ borderRight: `1px solid ${borderColor}` }}>{i + 1}</td>
                   <td className="px-3 py-2" style={{ borderRight: `1px solid ${borderColor}` }}>
-                    <span className="font-medium whitespace-pre-line">{item.description || <span className="text-[#d1d5db] italic">—</span>}</span>
+                    <span className="font-medium whitespace-pre-line">{item.description || ''}</span>
                   </td>
                   <td className="px-2 py-2 text-center text-[#6b7280]" style={{ borderRight: `1px solid ${borderColor}` }}>{item.hsnSac || '—'}</td>
                   <td className="px-2 py-2 text-center" style={{ borderRight: `1px solid ${borderColor}` }}>{item.quantity}</td>

@@ -81,15 +81,45 @@ export default function InvoiceMeta() {
 
         {/* Due Date */}
         <div>
-          <label className="theme-label">
-            Due Date
-          </label>
-          <input
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="theme-input [color-scheme:light] dark:[color-scheme:dark]"
-          />
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-xs font-medium text-slate-600 dark:text-slate-400">
+              Due Date
+            </label>
+            {dueDate && (
+              <button
+                type="button"
+                onClick={() => setDueDate('')}
+                className="text-[11px] text-red-500 hover:text-red-600 dark:text-red-400 font-medium flex items-center gap-0.5 px-1.5 py-0.5 rounded hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                title="Remove due date"
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Remove
+              </button>
+            )}
+          </div>
+          <div className="relative flex items-center">
+            <input
+              type="date"
+              value={dueDate || ''}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="theme-input [color-scheme:light] dark:[color-scheme:dark] pr-8"
+            />
+            {dueDate && (
+              <button
+                type="button"
+                onClick={() => setDueDate('')}
+                className="absolute right-2.5 p-1 text-slate-400 hover:text-red-500 dark:hover:text-red-400 transition-colors rounded"
+                title="Clear due date"
+                aria-label="Clear due date"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Status */}

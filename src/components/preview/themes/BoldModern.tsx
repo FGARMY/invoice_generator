@@ -57,10 +57,12 @@ export default function BoldModern() {
                 <p className="font-bold uppercase tracking-widest text-[#737373] mb-1">Date</p>
                 <p className="font-bold text-[14px]">{formatDateDisplay(invoiceDate)}</p>
               </div>
-              <div>
-                <p className="font-bold uppercase tracking-widest text-[#737373] mb-1">Due Date</p>
-                <p className="font-bold text-[14px]">{formatDateDisplay(dueDate)}</p>
-              </div>
+              {dueDate ? (
+                <div>
+                  <p className="font-bold uppercase tracking-widest text-[#737373] mb-1">Due Date</p>
+                  <p className="font-bold text-[14px]">{formatDateDisplay(dueDate)}</p>
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="w-[35%] text-right">
@@ -140,7 +142,7 @@ export default function BoldModern() {
                 <tr key={item.id} className="border-b border-[#E5E5E5]">
                   <td className="py-4">
                     <span className="font-bold text-[12px] whitespace-pre-line">
-                      {item.description || <span className="text-[#A3A3A3] italic">No description</span>}
+                      {item.description || ''}
                     </span>
                   </td>
                   {hasHsnSac && (
