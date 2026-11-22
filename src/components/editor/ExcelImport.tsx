@@ -24,6 +24,7 @@ export default function ExcelImport() {
     setLineItems,
     setTax,
     setShipping,
+    setAmountInWords,
   } = useInvoiceStore();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -80,6 +81,10 @@ export default function ExcelImport() {
       if (option.shipping !== undefined) {
         setShipping(option.shipping);
       }
+
+      if (option.amountInWords !== undefined) {
+        setAmountInWords(option.amountInWords);
+      }
     },
     [
       setInvoiceNumber,
@@ -90,6 +95,7 @@ export default function ExcelImport() {
       setLineItems,
       setTax,
       setShipping,
+      setAmountInWords,
     ]
   );
 

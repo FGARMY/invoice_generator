@@ -3,6 +3,7 @@
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { formatCurrency } from '@/lib/currencies';
 import { formatDateDisplay } from '@/lib/defaults';
+import { numberToWords } from '@/lib/numberToWords';
 import {
   calcSubtotal,
   calcDiscountAmount,
@@ -19,7 +20,8 @@ export default function BoldModern() {
     discount, tax, shipping,
     notes, terms, paymentDetails,
     currency, accentColor,
-    amountPaid, balanceDue, fontFamily
+    amountPaid, balanceDue, fontFamily,
+    amountInWords
   } = store;
 
   const subtotal = calcSubtotal(lineItems);
@@ -271,6 +273,12 @@ export default function BoldModern() {
                   </div>
                 </>
               )}
+
+              {/* Amount in Words */}
+              <div className="pt-3 text-[10px] border-t border-[#E5E5E5]">
+                <span className="font-bold uppercase tracking-widest text-[#737373]">Amount in Words: </span>
+                <span className="font-medium italic">{amountInWords || numberToWords(total, currency)}</span>
+              </div>
             </div>
           </div>
         </div>

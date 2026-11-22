@@ -38,6 +38,7 @@ export interface ExtractedInvoiceOption {
   taxRate?: number;
   gstType?: 'intraState' | 'interState';
   shipping?: number;
+  amountInWords?: string;
 }
 
 export interface ExcelParseResult {
@@ -807,6 +808,7 @@ function parseFormattedTaxInvoiceBlocks(
     const lineItems: LineItem[] = [];
     let gstType: 'intraState' | 'interState' | undefined;
     let shippingAdjustment: number | undefined;
+    let extractedAmountInWords: string | undefined;
 
     if (rTable !== -1) {
       const headerRow = rows[rTable] || [];
@@ -855,6 +857,25 @@ function parseFormattedTaxInvoiceBlocks(
           }
           continue;
         }
+
+        const wordsIdx = row.findIndex((c) => /amount\s*(?:\(in\s*words\)|in\s*words)/i.test(c.trim()));
+        if (wordsIdx !== -1) {
+          inFooter = true;
+          const cellText = row[wordsIdx].trim();
+          const matchColon = cellText.match(/amount\s*(?:\(in\s*words\)|in\s*words)\s*[:\-]?\s*(.+)/i);
+          if (matchColon && matchColon[1]?.trim()) {
+            extractedAmountInWords = matchColon[1].trim();
+          } else {
+            for (let wc = wordsIdx + 1; wc < row.length; wc++) {
+              if (row[wc]?.trim()) {
+                extractedAmountInWords = row[wc].trim().replace(/^[:\-]\s*/, '');
+                break;
+              }
+            }
+          }
+          continue;
+        }
+
         if (row.some((c) => /grand\s*total|amount\s*\(in\s*words\)|e\.\s*&\s*o\.e/i.test(c.trim()))) {
           inFooter = true;
           continue;
@@ -914,6 +935,7 @@ function parseFormattedTaxInvoiceBlocks(
       taxRate: 18,
       gstType,
       shipping: shippingAdjustment,
+      amountInWords: extractedAmountInWords,
     });
   }
 

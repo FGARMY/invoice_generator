@@ -64,6 +64,7 @@ interface InvoiceState extends Invoice {
   setTheme: (theme: ThemeName) => void;
   setAccentColor: (color: string) => void;
   setFontFamily: (font: string) => void;
+  setAmountInWords: (amountInWords: string) => void;
   setAmountPaid: (amount: number) => void;
   setInvoiceNumber: (number: string) => void;
   setDocumentTitle: (title: string) => void;
@@ -201,6 +202,7 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
   setTheme: (theme) => set({ theme }),
   setAccentColor: (accentColor) => set({ accentColor }),
   setFontFamily: (fontFamily) => set({ fontFamily }),
+  setAmountInWords: (amountInWords) => set({ amountInWords }),
   setAmountPaid: (amountPaid) =>
     set((state) => {
       return { amountPaid, ...recalcFields({ ...state, amountPaid }) };
@@ -335,6 +337,7 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       resetInvoice: _24,
       getInvoiceData: _25,
       setFontFamily: _26,
+      setAmountInWords: _26_a,
       setAmountPaid: _27,
       setDocumentTitle: _28,
       appTheme: _appTheme,

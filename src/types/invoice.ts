@@ -71,6 +71,7 @@ export interface Invoice {
   tax: Tax;
   shipping: number;
   total: number; // auto-calculated
+  amountInWords?: string; // editable price in words
   amountPaid: number;
   balanceDue: number; // auto-calculated
 

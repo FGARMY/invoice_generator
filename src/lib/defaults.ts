@@ -118,6 +118,7 @@ export const defaultInvoice: Invoice = {
   tax: { ...defaultTax },
   shipping: 0.12,
   total: 32823,
+  amountInWords: 'Thirty Two Thousand Eight Hundred Twenty Three Only',
   amountPaid: 0,
   balanceDue: 32823,
   notes: 'Short & Access: ₹0.12 (Adjusted in Total)\nAmount in Words: Thirty Two Thousand Eight Hundred Twenty Three Only',

@@ -1,15 +1,35 @@
 'use client';
 
 import { useInvoiceStore } from '@/store/invoiceStore';
+import { numberToWords } from '@/lib/numberToWords';
+import { calcSubtotal, calcDiscountAmount, calcTaxAmount } from '@/lib/calculations';
 
 export default function TaxDiscount() {
-  const { discount, tax, shipping, amountPaid, setDiscount, setTax, setShipping, setAmountPaid } =
-    useInvoiceStore();
+  const {
+    discount,
+    tax,
+    shipping,
+    amountPaid,
+    amountInWords,
+    lineItems,
+    currency,
+    setDiscount,
+    setTax,
+    setShipping,
+    setAmountPaid,
+    setAmountInWords,
+  } = useInvoiceStore();
+
+  const subtotal = calcSubtotal(lineItems);
+  const discountAmt = calcDiscountAmount(subtotal, discount);
+  const taxAmt = calcTaxAmount(subtotal, discount, tax);
+  const total = Math.max(0, subtotal - discountAmt + taxAmt + (shipping || 0));
+  const autoWords = numberToWords(total, currency);
 
   return (
     <div className="space-y-4">
       <h3 className="theme-heading">
-        Tax, Discount & Short & Access
+        Tax, Discount & Amount in Words
       </h3>
 
       <div className="space-y-4">
@@ -145,6 +165,36 @@ export default function TaxDiscount() {
             className="theme-input"
             placeholder="0.00"
           />
+        </div>
+
+        {/* Amount in Words / Price in Words */}
+        <div className="p-3 bg-slate-50 dark:bg-slate-800/30 rounded-lg border border-slate-200 dark:border-slate-700/50 space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+              Amount in Words (Price in Words)
+            </label>
+            <button
+              type="button"
+              onClick={() => setAmountInWords(autoWords)}
+              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1 transition-colors px-2 py-0.5 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20"
+              title="Auto-calculate amount in words from invoice total"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Auto-generate
+            </button>
+          </div>
+          <textarea
+            rows={2}
+            value={amountInWords !== undefined ? amountInWords : autoWords}
+            onChange={(e) => setAmountInWords(e.target.value)}
+            className="theme-input text-xs resize-none font-medium text-slate-800 dark:text-slate-200"
+            placeholder={autoWords}
+          />
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            Printed on the invoice. You can edit this text directly or click &quot;Auto-generate&quot; to re-calculate from grand total.
+          </p>
         </div>
       </div>
     </div>

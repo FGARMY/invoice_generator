@@ -3,6 +3,7 @@
 import { useInvoiceStore } from '@/store/invoiceStore';
 import { formatCurrency } from '@/lib/currencies';
 import { formatDateDisplay } from '@/lib/defaults';
+import { numberToWords } from '@/lib/numberToWords';
 import {
   calcSubtotal,
   calcDiscountAmount,
@@ -19,7 +20,8 @@ export default function CorporateBlue() {
     discount, tax, shipping,
     notes, terms, paymentDetails,
     currency, accentColor,
-    amountPaid, balanceDue, fontFamily
+    amountPaid, balanceDue, fontFamily,
+    amountInWords
   } = store;
 
   const subtotal = calcSubtotal(lineItems);
@@ -258,6 +260,12 @@ export default function CorporateBlue() {
                   </div>
                 </div>
               )}
+
+              {/* Amount in Words */}
+              <div className="mt-3 p-2.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded text-[10px]">
+                <span className="text-[#64748B] font-bold uppercase tracking-wider">Amount in Words: </span>
+                <span className="font-semibold italic text-[#1E293B]">{amountInWords || numberToWords(total, currency)}</span>
+              </div>
             </div>
           </div>
         </div>
