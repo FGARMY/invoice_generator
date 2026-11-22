@@ -22,6 +22,7 @@ export default function InvoicePreview() {
   const client = useInvoiceStore((s) => s.client);
   const lineItems = useInvoiceStore((s) => s.lineItems);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [downloadedPdfInfo, setDownloadedPdfInfo] = useState<{ url: string; filename: string } | null>(null);
   const [mobileZoomMode, setMobileZoomMode] = useState<'fit' | 'fill'>('fit');
   const [canShare, setCanShare] = useState(false);
 
@@ -64,11 +65,15 @@ export default function InvoicePreview() {
     if (!validate()) return;
 
     setIsExporting(true);
+    setDownloadedPdfInfo(null);
     try {
       let safeName = invoiceNumber.replace(/[^a-zA-Z0-9-]/g, '_');
       if (!safeName) safeName = 'invoice';
       const filename = `${safeName}.pdf`;
-      await exportToPDF('invoice-preview-content', filename);
+      const result = await exportToPDF('invoice-preview-content', filename);
+      if (result.url) {
+        setDownloadedPdfInfo({ url: result.url, filename });
+      }
     } catch (err: any) {
       console.error('PDF export failed:', err);
       setValidationError(`PDF export failed: ${err?.message || err}`);
@@ -84,18 +89,24 @@ export default function InvoicePreview() {
 
   const handleShare = useCallback(async () => {
     if (!validate()) return;
+    setIsExporting(true);
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: `Invoice #${invoiceNumber}`,
-          text: `Invoice #${invoiceNumber} for ${client.name}`,
-          url: window.location.href,
-        });
+      let safeName = invoiceNumber.replace(/[^a-zA-Z0-9-]/g, '_');
+      if (!safeName) safeName = 'invoice';
+      const filename = `${safeName}.pdf`;
+      // Generate and share the actual PDF file
+      await exportToPDF('invoice-preview-content', filename, { forceShare: true });
+    } catch (err: any) {
+      console.error('PDF share failed:', err);
+      // If user cancelled, don't show error
+      if (err?.name !== 'AbortError') {
+        setValidationError(`PDF share failed: ${err?.message || err}`);
+        setTimeout(() => setValidationError(null), 4000);
       }
-    } catch {
-      // User cancelled share or not supported
+    } finally {
+      setIsExporting(false);
     }
-  }, [validate, invoiceNumber, client]);
+  }, [validate, invoiceNumber]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
@@ -164,6 +175,35 @@ export default function InvoicePreview() {
       {validationError && (
         <div className="mx-4 mt-3 px-3 py-2 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-lg print:hidden">
           {validationError}
+        </div>
+      )}
+
+      {/* PDF Ready Direct Action Banner (especially helpful on mobile browsers) */}
+      {downloadedPdfInfo && (
+        <div className="mx-3 sm:mx-4 mt-2 px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg flex items-center justify-between text-xs text-emerald-700 dark:text-emerald-300 print:hidden animate-fade-in">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-emerald-500 font-bold">✓</span>
+            <span className="truncate">PDF generated successfully!</span>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <a
+              href={downloadedPdfInfo.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              download={downloadedPdfInfo.filename}
+              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded text-[11px] shadow-2xs transition-colors"
+            >
+              Open / View PDF
+            </a>
+            <button
+              type="button"
+              onClick={() => setDownloadedPdfInfo(null)}
+              className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              title="Dismiss"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       )}
 
