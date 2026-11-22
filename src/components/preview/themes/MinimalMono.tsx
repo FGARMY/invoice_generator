@@ -95,18 +95,22 @@ export default function MinimalMono() {
               <div className="flex-1 px-2 py-1.5 font-semibold" style={{ borderRight: `1px solid ${borderColor}` }}>Invoice No.</div>
               <div className="flex-1 px-2 py-1.5 font-semibold">Dated</div>
             </div>
-            <div className="flex border-b" style={{ borderColor }}>
+            <div className={`flex ${dueDate ? 'border-b' : ''}`} style={{ borderColor }}>
               <div className="flex-1 px-2 py-1.5" style={{ borderRight: `1px solid ${borderColor}` }}>{invoiceNumber}</div>
               <div className="flex-1 px-2 py-1.5">{formatDateDisplay(invoiceDate)}</div>
             </div>
-            <div className="flex border-b" style={{ borderColor }}>
-              <div className="flex-1 px-2 py-1.5 font-semibold" style={{ borderRight: `1px solid ${borderColor}` }}>Due Date</div>
-              <div className="flex-1 px-2 py-1.5 font-semibold">P.O No.</div>
-            </div>
-            <div className="flex">
-              <div className="flex-1 px-2 py-1.5" style={{ borderRight: `1px solid ${borderColor}` }}>{dueDate ? formatDateDisplay(dueDate) : '—'}</div>
-              <div className="flex-1 px-2 py-1.5">—</div>
-            </div>
+            {dueDate ? (
+              <>
+                <div className="flex border-b" style={{ borderColor }}>
+                  <div className="flex-1 px-2 py-1.5 font-semibold" style={{ borderRight: `1px solid ${borderColor}` }}>Due Date</div>
+                  <div className="flex-1 px-2 py-1.5 font-semibold">P.O No.</div>
+                </div>
+                <div className="flex">
+                  <div className="flex-1 px-2 py-1.5" style={{ borderRight: `1px solid ${borderColor}` }}>{formatDateDisplay(dueDate)}</div>
+                  <div className="flex-1 px-2 py-1.5">—</div>
+                </div>
+              </>
+            ) : null}
           </div>
         </div>
       </div>
