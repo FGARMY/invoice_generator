@@ -1,6 +1,7 @@
 export function numberToWords(num: number, currency: string = 'INR'): string {
-  if (num === 0) return 'Zero Only';
   if (isNaN(num)) return '';
+  const rounded = Math.round(Math.abs(num) * 100) / 100;
+  if (rounded === 0) return 'Zero Only';
 
   const ones = [
     '', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
@@ -18,15 +19,22 @@ export function numberToWords(num: number, currency: string = 'INR'): string {
     return convertIndian(Math.floor(n / 10000000)) + ' Crore' + (n % 10000000 ? ' ' + convertIndian(n % 10000000) : '');
   }
 
-  const intPart = Math.floor(Math.abs(num));
-  const decPart = Math.round((Math.abs(num) - intPart) * 100);
+  const intPart = Math.floor(rounded);
+  const decPart = Math.round((rounded - intPart) * 100);
 
-  let result = convertIndian(intPart).trim();
-  if (!result) result = 'Zero';
-
-  if (decPart > 0) {
-    result += ' and ' + convertIndian(decPart).trim() + ' Paise';
+  let result = '';
+  if (intPart > 0) {
+    result = convertIndian(intPart).trim();
   }
 
-  return result + ' Only';
+  if (decPart > 0) {
+    const paiseText = convertIndian(decPart).trim() + ' Paise';
+    if (result) {
+      result += ' and ' + paiseText;
+    } else {
+      result = paiseText;
+    }
+  }
+
+  return (result || 'Zero').replace(/\s+/g, ' ') + ' Only';
 }

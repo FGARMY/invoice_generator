@@ -11,6 +11,7 @@ export default function TaxDiscount() {
     shipping,
     amountPaid,
     amountInWords,
+    isCustomAmountInWords,
     lineItems,
     currency,
     setDiscount,
@@ -170,14 +171,25 @@ export default function TaxDiscount() {
         {/* Amount in Words / Price in Words */}
         <div className="p-3 bg-slate-50 dark:bg-slate-800/30 rounded-lg border border-slate-200 dark:border-slate-700/50 space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
-              Amount in Words (Price in Words)
-            </label>
+            <div className="flex items-center gap-2">
+              <label className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                Amount in Words
+              </label>
+              {isCustomAmountInWords ? (
+                <span className="text-[10px] text-amber-600 dark:text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded font-medium">
+                  Custom
+                </span>
+              ) : (
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded font-medium">
+                  Auto (Exact)
+                </span>
+              )}
+            </div>
             <button
               type="button"
-              onClick={() => setAmountInWords(autoWords)}
+              onClick={() => setAmountInWords(autoWords, false)}
               className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1 transition-colors px-2 py-0.5 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20"
-              title="Auto-calculate amount in words from invoice total"
+              title="Auto-calculate exact amount in words from grand total"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -187,13 +199,13 @@ export default function TaxDiscount() {
           </div>
           <textarea
             rows={2}
-            value={amountInWords !== undefined ? amountInWords : autoWords}
-            onChange={(e) => setAmountInWords(e.target.value)}
+            value={isCustomAmountInWords ? (amountInWords ?? '') : (amountInWords || autoWords)}
+            onChange={(e) => setAmountInWords(e.target.value, true)}
             className="theme-input text-xs resize-none font-medium text-slate-800 dark:text-slate-200"
             placeholder={autoWords}
           />
           <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Printed on the invoice. You can edit this text directly or click &quot;Auto-generate&quot; to re-calculate from grand total.
+            Automatically calculates exact words from total. You can also edit it directly or click &quot;Auto-generate&quot; to re-sync.
           </p>
         </div>
       </div>

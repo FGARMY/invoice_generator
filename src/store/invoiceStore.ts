@@ -26,6 +26,7 @@ import {
   calcTaxAmount,
   calcGrandTotal,
 } from '@/lib/calculations';
+import { numberToWords } from '@/lib/numberToWords';
 import {
   saveDraft,
   loadDraft,
@@ -64,7 +65,7 @@ interface InvoiceState extends Invoice {
   setTheme: (theme: ThemeName) => void;
   setAccentColor: (color: string) => void;
   setFontFamily: (font: string) => void;
-  setAmountInWords: (amountInWords: string) => void;
+  setAmountInWords: (amountInWords: string, isCustom?: boolean) => void;
   setAmountPaid: (amount: number) => void;
   setInvoiceNumber: (number: string) => void;
   setDocumentTitle: (title: string) => void;
@@ -92,7 +93,16 @@ function recalcFields(state: Partial<InvoiceState>): Partial<InvoiceState> {
   const amountPaid = state.amountPaid || 0;
   const balanceDue = total - amountPaid;
 
-  return { subtotal, total, amountPaid, balanceDue };
+  const currency = state.currency || 'INR';
+  const autoWords = numberToWords(total, currency);
+
+  return {
+    subtotal,
+    total,
+    amountPaid,
+    balanceDue,
+    ...(!state.isCustomAmountInWords ? { amountInWords: autoWords } : {}),
+  };
 }
 
 export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
@@ -198,11 +208,19 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       return { paymentDetails };
     }),
 
-  setCurrency: (currency) => set({ currency }),
+  setCurrency: (currency) =>
+    set((state) => ({
+      currency,
+      ...recalcFields({ ...state, currency }),
+    })),
   setTheme: (theme) => set({ theme }),
   setAccentColor: (accentColor) => set({ accentColor }),
   setFontFamily: (fontFamily) => set({ fontFamily }),
-  setAmountInWords: (amountInWords) => set({ amountInWords }),
+  setAmountInWords: (amountInWords, isCustom = true) =>
+    set({
+      amountInWords,
+      isCustomAmountInWords: isCustom && amountInWords.trim() !== '',
+    }),
   setAmountPaid: (amountPaid) =>
     set((state) => {
       return { amountPaid, ...recalcFields({ ...state, amountPaid }) };
@@ -301,6 +319,8 @@ export const useInvoiceStore = create<InvoiceState>()((set, get) => ({
       theme: state.theme,
       accentColor: state.accentColor,
       fontFamily: state.fontFamily,
+      isCustomAmountInWords: false,
+      ...recalcFields({ ...defaultInvoice, currency: state.currency }),
     });
   },
 

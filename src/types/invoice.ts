@@ -72,6 +72,7 @@ export interface Invoice {
   shipping: number;
   total: number; // auto-calculated
   amountInWords?: string; // editable price in words
+  isCustomAmountInWords?: boolean; // true if manually typed by user, false if auto-calculated
   amountPaid: number;
   balanceDue: number; // auto-calculated
 
