@@ -54,6 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${playfair.variable} ${spaceGrotesk.variable} ${robotoMono.variable} ${outfit.variable} h-full antialiased`}
     >
       <head>
